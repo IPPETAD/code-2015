@@ -5,4 +5,5 @@ gem 'sinatra'
 group :development do
 	gem 'pry'
 	gem 'pry-byebug'
+	gem 'sinatra-contrib'
 end
