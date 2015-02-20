@@ -1,7 +1,7 @@
-require 'sinatra'
-require 'sinatra/reloader'
-require 'pry'
+require 'bundler'
+Bundler.require(:default)
+Bundler.require(:development)
 
 get '/' do
-	'Hello all!'
+	'Hello everyone!'
 end
