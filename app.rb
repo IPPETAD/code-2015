@@ -53,6 +53,10 @@ class MyApp < Sinatra::Base
 			:conferences => settings.db_conf.getConferences(10, page_count*(page-1))
 		}
 	end
+	
+	get '/venues' do
+		erb :venues
+	end
 
 	#### AUTHENTICATION ####
 

@@ -3,7 +3,7 @@ var category_map = {
     'convention': '4bf58dd8d48988d1ff931735'
 };
 
-function fourSquare(location, category) {
+function fourSquare(location, category, func) {
     console.log(location);
     $.get(
         'https://api.foursquare.com/v2/venues/search' +
@@ -12,8 +12,6 @@ function fourSquare(location, category) {
         '&v=20150220' +
         '&near=' + encodeURI(location) +
         '&categoryId=' + category_map[category],
-        function(data) {
-            console.log(data);
-        }
+        func
     );
 }
