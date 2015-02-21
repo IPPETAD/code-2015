@@ -61,6 +61,10 @@ class MyApp < Sinatra::Base
 		erb :venues
 	end
 
+	get '/growth' do
+		erb :growth
+	end
+
 	#### AUTHENTICATION ####
 
 	get '/login' do
