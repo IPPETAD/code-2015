@@ -1,15 +1,13 @@
 require 'rubygems'
 require 'bundler'
 Bundler.require(:default)
-Bundler.require(:development) unless ENV['RACK_ENV']
+Bundler.require(:development)
 
 class MyApp < Sinatra::Base
-	configure :development do
-		register Sinatra::Reloader
-	end
 
 	configure do
 		enable :sessions
+		register Sinatra::Reloader if development?
 	end
 
 	helpers do
