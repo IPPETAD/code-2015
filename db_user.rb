@@ -15,10 +15,10 @@ class UserData
   #
   # Authenticate user from given username and password
   #
-  def authenticate(username, password)
-    username.downcase!
+  def authenticate(email, password)
+    email.downcase!
     @userData.find({
-      "username" => username,
+      "email" => email,
       "password" => password
     }).count.to_i == 0
   end

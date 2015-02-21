@@ -35,10 +35,11 @@ class MyApp < Sinatra::Base
 
 	post '/login' do
 		session[:identity] = settings.db_user.authenticate(params['email'], params['password'])
-		if not session[:identity]
+		if session[:identity]
 			redirect to '/'
 		else
 			redirect to '/login'
+		end
 	end
 
 	get '/logout' do
