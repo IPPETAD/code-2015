@@ -1,13 +1,11 @@
 require 'rubygems'
-require 'mongo'
 require 'json/ext'
-
-include Mongo
+require_relative './mongo_client_singleton'
 
 class ConferenceData
 
 	def initialize
-		conn = MongoClient.new("localhost", 27017)
+		conn = MongoClientSingleton::instance
 		db = conn.db('james')
 		@confData = db['conferences']
 	end
@@ -23,5 +21,5 @@ class ConferenceData
 		}).to_a
 	end
 
-	
+
 end
