@@ -11,7 +11,7 @@ class MyApp < Sinatra::Base
 	end
 
 	helpers do
-		
+
 		# Whether user is authenticated
 		def authenticated?
 			not session[:identity].nil?
@@ -19,9 +19,7 @@ class MyApp < Sinatra::Base
 	end
 
 	get '/' do
-		erb :main do
-			erb :home
-		end
+		erb :home
 	end
 
 end
