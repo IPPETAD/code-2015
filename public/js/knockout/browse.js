@@ -5,9 +5,10 @@ function BrowseViewModel() {
     self.filter = ko.observable();
     self.filteredConferences = ko.computed(function() {
         return self.conferences.filter(function(conf) {
-            if(!self.filter() || self.filter() == '')
+            if(!self.filter() || self.filter() == '' || self.filter().length < 3)
                 return true;
-            return conf.title().indexOf(self.filter()) > -1;
+            return conf.title().toLowerCase().indexOf(self.filter().toLowerCase()) > -1 ||
+                conf.description().toLowerCase().indexOf(self.filter().toLowerCase()) > -1;
         }).extend({paging: 10});
     }, this);
 
