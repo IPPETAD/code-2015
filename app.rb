@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'bundler'
+require './db_user'
 Bundler.require(:default)
 Bundler.require(:development)
 
@@ -8,6 +9,7 @@ class MyApp < Sinatra::Base
 	configure do
 		enable :sessions
 		register Sinatra::Reloader if development?
+		set :db_user, UserData.new
 	end
 
 	helpers do
@@ -32,6 +34,11 @@ class MyApp < Sinatra::Base
 	end
 
 	post '/login' do
+		session[:identity] = settings.db_user.authenticate(params['email'], params['password'])
+		if not session[:identity]
+			redirect to '/'
+		else
+			redirect to '/login'
 	end
 
 	get '/logout' do
