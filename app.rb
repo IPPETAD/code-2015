@@ -11,7 +11,6 @@ class MyApp < Sinatra::Base
 	end
 
 	helpers do
-		
 		# Whether user is authenticated
 		def authenticated?
 			not session[:identity].nil?
@@ -22,6 +21,32 @@ class MyApp < Sinatra::Base
 		erb :main do
 			erb :home
 		end
+	end
+
+	#### AUTHENTICATION ####
+
+	get '/login' do
+		erb :main do
+			erb :login
+		end
+	end
+
+	post '/login' do
+	end
+
+	get '/logout' do
+		session.delete(:identity)
+		redirect to '/'
+	end
+
+	get '/signup' do
+		erb :main do
+			erb :signup
+		end
+	end
+
+	post '/signup' do
+
 	end
 
 end
