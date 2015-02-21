@@ -1,0 +1,59 @@
+
+<h2>Find Conferences</h2>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-3">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+				<a class="toggle" data-toggle="collapse" data-target="#collapseOne">
+					Filter
+				</a>
+				</h4>
+			</div>
+			<div id="collapseOne" class="panel-collapse collapse in">
+				<div class="panel-body">This is a title</div>
+			</div>
+		</div>
+    </div>
+    <div class="col-lg-9">
+      	<div class="panel panel-default">
+			<% conferences.each do |conf| %>
+        	<div class="panel-heading"><h4><%= conf["title"]%></h4></div>
+          		<div class="panel-body">
+            		<div class="media">
+                		<div class="media-left">
+							<img class="media-object" src="<%= conf["image"]%>">
+                		</div>
+                		<div class="media-body">
+							<%= conf["description"] %>
+                		</div>
+            		</div>
+          		</div>
+        	</div>
+			<% end %>
+    		<nav>
+        		<ul class="pagination">
+          			<li>
+            			<a href="/browse?q=<%=params[:q]%>&page=1&filter=<%=filter%>" aria-label="Previous">
+              				<span aria-hidden="true">&laquo;</span>
+            			</a>
+          			</li>
+					<% ([1,page-3].max..[page_count,page+3].min).step(1).each do |pg| %>
+          				<li <% if pg == page %>class="active"<% end %>>
+							<a href="/browse?q=<%=params[:q]%>&page=<%=pg%>&filter=<%=filter%>"><%= pg %></a></li>
+						</lit>
+					<% end %>
+          			<li>
+            			<a href="/browse?q=<%=params[:q]%>&page=<%=page_count%>&filter=<%=filter%>" aria-label="Next">
+              				<span aria-hidden="true">&raquo;</span>
+            			</a>
+          			</li>
+        		</ul>
+      		</nav>
+		</div>
+	</div>
+  </div>
+</div>
+
