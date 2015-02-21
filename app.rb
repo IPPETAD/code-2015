@@ -46,6 +46,7 @@ class MyApp < Sinatra::Base
 	end
 
 	get '/browse' do
+		@title = "Browse Conferences"
 		query = params[:q]
 		page = [(params[:page] || 1).to_i, 1].min
 		filters = params[:filter]
@@ -71,6 +72,7 @@ class MyApp < Sinatra::Base
 	#### AUTHENTICATION ####
 
 	get '/login' do
+		@title = "Log In"
 		erb :login
 	end
 
@@ -90,6 +92,7 @@ class MyApp < Sinatra::Base
 	end
 
 	get '/signup' do
+		@title = "Sign Up"
 		erb :signup
 	end
 
@@ -107,6 +110,7 @@ class MyApp < Sinatra::Base
 	end
 
 	get '/conference' do
+		@title = "Conference Details"
 		js :knockout, :knockout_models, 'knockout/conference'
 		erb :conference
 	end
