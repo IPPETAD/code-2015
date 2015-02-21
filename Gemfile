@@ -8,3 +8,7 @@ group :development do
 	gem 'pry-byebug'
 	gem 'sinatra-contrib', require: 'sinatra/reloader'
 end
+
+group :linux do
+	gem 'bson_ext'
+end

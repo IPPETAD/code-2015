@@ -41,8 +41,6 @@ conf.imageUrl("some new url");
  *  Venue: {
  *    name: String,
  *    location: String,
- *    capacity: int,
- *    liquor: bool
  *  }
  */
 function Venue(data) {
@@ -50,12 +48,36 @@ function Venue(data) {
   data = data || "";
 
   self.name = ko.observable(data.name);
-  self.location = ko.observable(data.location);
-  self.capacity = ko.observable(data.capacity);
-  self.liquor = ko.observable(data.liquor);
+  self.location = ko.observable(new Location(data.location));
 }
 
-/** 
+/**
+ *  Location: {
+ *    address: String,
+ *    crossStreet: String,
+ *    city: String,
+ *    state: String
+ *  }
+ */
+ function Location(data) {
+    var self = this;
+    data = data || "";
+
+    self.address = ko.observable(data.address || "");
+    self.crossStreet = ko.observable(data.crossStreet || "");
+    self.city = ko.observable(data.city || "");
+    self.state = ko.observable(data.state || "");
+ }
+
+ Location.prototype.toString = function() {
+    var self = this;
+    return self.address() + ' ' +
+        self.crossStreet() + ', ' +
+        self.city() + ', ' +
+        self.state();
+ }
+
+/**
  *  ItineraryEntry: {
  *    startTime: Date,
  *    endTime: Date,
