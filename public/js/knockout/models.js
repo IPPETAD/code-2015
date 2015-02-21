@@ -1,8 +1,8 @@
-
 /**
  *  Conference: {
  *    id: String.
  *    name: String,
+ *    imageUrl: String,
  *    topic: String,
  *    startTime: Date,
  *    endTime: Date,
@@ -18,6 +18,7 @@ function Conference(data) {
 
   self.id = data.id;
   self.name = ko.observable(data.name);
+  self.imageUrl = ko.observable(data.imageUrl);
   self.topic = ko.observable(data.topic);
   self.startTime = ko.observable(data.startTime);
   self.endTime = ko.observable(data.endTime);
@@ -25,10 +26,16 @@ function Conference(data) {
   self.tags = ko.observableArray(data.tags);
 
   self.venue = ko.observable(new Venue(data.venue));
+  data.itinerary = data.itinerary || [];
   self.itinerary = ko.observableArray(data.itinerary.map(function(item) {
     return new ItineraryEntry(item);
   }));
 }
+
+
+conf.imageUrl();
+conf.imageUrl("some new url");
+
 
 /**
  *  Venue: {

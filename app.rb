@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'bundler'
-require './db_user'
+require './src/db_user'
+require './src/sinatra_helpers'
 Bundler.require(:default)
 Bundler.require(:development)
 
@@ -72,6 +73,11 @@ class MyApp < Sinatra::Base
 		else
 			redirect to '/signup'
 		end
+	end
+
+	get '/conference' do 
+		js :knockout, 'knockout/conference.js'
+		erb :conference
 	end
 
 end
