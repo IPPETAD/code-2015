@@ -6,8 +6,8 @@ class ConferenceData
 
 	def initialize
 		conn = MongoClientSingleton::instance
-		db = conn.db('james')
-		@confData = db['conferences']
+		@db = conn.db('james')
+		@confData = @db['conferences']
 	end
 
 	def countConferences
@@ -21,5 +21,10 @@ class ConferenceData
 		}).to_a
 	end
 
+	def searchConferences(text)
+		@db.command({text: 'conferences', search: text})['results'].map do |result|
+			result['obj']
+		end
+	end
 
 end

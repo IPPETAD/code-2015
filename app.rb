@@ -36,7 +36,12 @@ class MyApp < Sinatra::Base
 
 	end
 
+	before do
+		logger.level = Logger::DEBUG
+	end
+
 	get '/' do
+		js :home
 		erb :home
 	end
 
@@ -46,13 +51,15 @@ class MyApp < Sinatra::Base
 		filters = params[:filter]
 
 		page_count = (settings.db_conf.countConferences() / 10)
-
+		confs = params[:q] ?
+			settings.db_conf.searchConferences(query) :
+			settings.db_conf.getConferences(10, page_count * (page - 1))
 		erb :browse, :locals => {
 			:params => params,
 			:filter => filters,
 			:page => page,
 			:page_count => page_count+1,
-			:conferences => settings.db_conf.getConferences(10, page_count*(page-1))
+			:conferences => confs
 		}
 	end
 
