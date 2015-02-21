@@ -9,7 +9,7 @@ class UserData
   def initialize
     conn = MongoClient.new("localhost", 27017)
     db = conn.db('james')
-    @userData = db['userData']
+    @userData = db['users']
   end
 
   #
@@ -20,17 +20,17 @@ class UserData
     @userData.find({
       "email" => email,
       "password" => password
-    }).count.to_i == 0
+    }).count.to_i > 0
   end
 
   #
-  # Currently just returns user exists
+  # Currently just returns whether user exists
   #
   def getUser(email)
     email.downcase!
     @userData.find({
       "email" => email
-    }).count.to_i == 0
+    }).count.to_i > 0
   end
 
   #

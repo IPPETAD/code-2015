@@ -39,9 +39,7 @@ class MyApp < Sinatra::Base
 	#### AUTHENTICATION ####
 
 	get '/login' do
-		erb :main do
-			erb :login
-		end
+		erb :login
 	end
 
 	post '/login' do
@@ -60,19 +58,17 @@ class MyApp < Sinatra::Base
 	end
 
 	get '/signup' do
-		erb :main do
-			erb :signup
-		end
+		erb :signup
 	end
 
 	post '/signup' do
-		push_error("Email taken") if settings.db_user.getUser(params['username'])
-		push_error("Passwords must match") if not params['password'] == params['re-password'])
+		push_error("Email taken") if settings.db_user.getUser(params['email'])
+		push_error("Passwords must match") if not (params['password'] == params['re-password'])
 
 		if not session[:errors] or session[:errors].empty?
 			session[:identity] = 1
-			settings.db_user.storeUser(params['username'], params['password'])
-			redirec to '/'
+			settings.db_user.storeUser(params['email'], params['password'])
+			redirect to '/'
 		else
 			redirect to '/signup'
 		end
