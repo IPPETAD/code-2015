@@ -1,12 +1,13 @@
 require 'rubygems'
 require 'bundler'
+require './sinatra/javascript'
 require './src/db_user'
 require './src/db_conferences'
-require './src/sinatra_helpers'
 Bundler.require(:default)
 Bundler.require(:development)
 
 class MyApp < Sinatra::Base
+	helpers Sinatra::JavaScripts
 
 	configure do
 		enable :sessions
@@ -54,8 +55,9 @@ class MyApp < Sinatra::Base
 			:conferences => settings.db_conf.getConferences(10, page_count*(page-1))
 		}
 	end
-	
+
 	get '/venues' do
+		js :knockout, :knockout_models, 'foursquare', 'knockout/venues'
 		erb :venues
 	end
 
@@ -97,8 +99,8 @@ class MyApp < Sinatra::Base
 		end
 	end
 
-	get '/conference' do 
-		js :knockout, 'knockout/conference.js'
+	get '/conference' do
+		js :knockout, :knockout_models, 'knockout/conference'
 		erb :conference
 	end
 

@@ -32,11 +32,6 @@ function Conference(data) {
   }));
 }
 
-
-conf.imageUrl();
-conf.imageUrl("some new url");
-
-
 /**
  *  Venue: {
  *    name: String,
@@ -96,5 +91,3 @@ function ItineraryEntry(data) {
   self.color = ko.observable(data.color);
   self.location = ko.observable(data.location);
 }
-
-

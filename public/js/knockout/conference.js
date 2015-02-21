@@ -2,9 +2,13 @@
 function ConferenceViewModel() {
   var self = this;
   self.conf = ko.observable(new Conference({
-    name: 'Marble statues and their place in modern dragonkin',
-    topic: 'Discussing the contoversial issues of what type of marble to use'
+    name: 'Test Conference 1',
+    topic: 'Test Topic 1'
   }));
+
+  console.log(self.conf());
 }
 
-ko.applyBindings(new ConferenceViewModel());
+$(function() {
+  ko.applyBindings(new ConferenceViewModel());
+});
