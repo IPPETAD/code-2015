@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 gem 'sinatra', require: 'sinatra/base'
 gem 'mongo'
+gem 'activesupport'
+gem 'sinatra_more', require: 'sinatra_more/markup_plugin'
 
 group :development do
 	gem 'pry'
