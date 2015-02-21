@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'sinatra'
+gem 'sinatra', require: 'sinatra/base'
 
 group :development do
 	gem 'pry'

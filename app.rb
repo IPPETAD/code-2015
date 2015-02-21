@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'bundler'
 Bundler.require(:default)
-Bundler.require(:development) if development?
+Bundler.require(:development) unless ENV['RACK_ENV']
 
 class MyApp < Sinatra::Base
 	configure :development do
