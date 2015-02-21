@@ -47,26 +47,31 @@ class MyApp < Sinatra::Base
 
 	get '/browse' do
 		@title = "Browse Conferences"
-		query = params[:q]
 		page = [(params[:page] || 1).to_i, 1].min
 		filters = params[:filter]
 
 		page_count = (settings.db_conf.countConferences() / 10)
-		confs = params[:q] ?
-			settings.db_conf.searchConferences(query) :
-			settings.db_conf.getConferences(10, page_count * (page - 1))
+		js :knockout, 'knockout/browse'
 		erb :browse, :locals => {
 			:params => params,
 			:filter => filters,
 			:page => page,
 			:page_count => page_count+1,
-			:conferences => confs
 		}
 	end
 
 	get '/venues' do
 		js :knockout, 'foursquare', 'knockout/venues'
 		erb :venues
+	end
+
+	get '/conferences' do
+		content_type :json
+		page_count = (settings.db_conf.countConferences() / 10)
+		page = [(params[:page] || 1).to_i, 1].min
+		params[:q] ?
+			settings.db_conf.searchConferences(params[:q]).to_json :
+			settings.db_conf.getConferences(0, 0).to_json
 	end
 
 	#### AUTHENTICATION ####
@@ -81,7 +86,7 @@ class MyApp < Sinatra::Base
 		if session[:identity]
 			redirect to '/'
 		else
-			push_error('Invalid login')
+			# push_error('Invalid login')
 			redirect to '/login'
 		end
 	end

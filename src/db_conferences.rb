@@ -1,4 +1,4 @@
-require 'rubygems'
+	require 'rubygems'
 require 'json/ext'
 require_relative './mongo_client_singleton'
 

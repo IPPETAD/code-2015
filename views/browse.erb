@@ -18,21 +18,21 @@
 		</div>
     </div>
     <div class="col-lg-9">
-      	<div class="panel panel-default">
-			<% conferences.each do |conf| %>
-        	<div class="panel-heading"><h4><%= conf["title"]%></h4></div>
-          		<div class="panel-body">
-            		<div class="media">
-                		<div class="media-left">
-							<img class="media-object" src="<%= conf["image"]%>">
-                		</div>
-                		<div class="media-body">
-							<%= conf["description"] %>
-                		</div>
+      	<div class="panel panel-default" data-bind="foreach: conferences">
+              <div class="panel-heading"><h4 data-bind="text: title"></h4></div>
+            		<div class="panel-body">
+              		<div class="media">
+                  		<div class="media-left">
+  							<img class="media-object" data-bind="attr: {src: image}">
+                  		</div>
+                  		<div class="media-body" data-bind="html: description">
+                  		</div>
+              		</div>
             		</div>
-          		</div>
-        	</div>
-			<% end %>
+          	</div>
+        </div>
+
+            </template>"
     		<nav>
         		<ul class="pagination">
           			<li>
