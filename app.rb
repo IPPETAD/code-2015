@@ -70,6 +70,7 @@ class MyApp < Sinatra::Base
 	end
 
 	get '/growth' do
+		js :d3, :nvd3, 'growth/ui'
 		erb :growth
 	end
 

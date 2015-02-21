@@ -1,4 +1,13 @@
+svg text {
+    fill: white !important;
+}
+
+.nvd3.nv-pie .nv-slice text {
+    fill: white !important;
+}
+
 /** THEME **/
+
 
 body{
   background: #112;

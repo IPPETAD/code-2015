@@ -26,6 +26,8 @@ module Sinatra
           'https://cdn.rawgit.com/SteveSanderson/knockout-projections/master/dist/knockout-projections.min.js',
           'js/knockout/extensions.js',
           'js/knockout/models.js']
+		when :d3 then ['http://d3js.org/d3.v3.min.js']
+		when :nvd3 then ['https://raw.githubusercontent.com/novus/nvd3/master/build/nv.d3.min.js']
         else ['js/' + script.to_s + '.js']
         end
       end
