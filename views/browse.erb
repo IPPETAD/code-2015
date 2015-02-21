@@ -19,33 +19,34 @@
     </div>
     <div class="col-lg-9">
       	<div class="panel panel-default">
-        	<div class="panel-heading"><h4>HackED 24 hour Student Hack-a-thon</h4></div>
+			<% conferences.each do |conf| %>
+        	<div class="panel-heading"><h4><%= conf["title"]%></h4></div>
           		<div class="panel-body">
             		<div class="media">
                 		<div class="media-left">
-                  			<img class="media-object" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PGRlZnMvPjxyZWN0IHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjEyLjUiIHk9IjMyIiBzdHlsZT0iZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQ7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+NjR4NjQ8L3RleHQ+PC9nPjwvc3ZnPg==">
+							<img class="media-object" src="<%= conf["image"]%>">
                 		</div>
                 		<div class="media-body">
-                  			<p>HACKed 2015 is Edmonton's largest student-only hackathon. Hosted at Startup Edmonton, and with over $2,000 in prizes, you won.t want to miss it. Register now! Tickets are $5 to enter, or $10 for entry and to be fed the entire time!</p>
-							<p>Teams of up to 3 people are suggested, but can be up to 5 (if you plan on having a larger team, please see the rules), but you don.t need a team, or even an idea to register!</p>
+							<%= conf["description"] %>
                 		</div>
             		</div>
           		</div>
         	</div>
+			<% end %>
     		<nav>
         		<ul class="pagination">
           			<li>
-            			<a href="#" aria-label="Previous">
+            			<a href="/browse?q=<%=params[:q]%>&page=1&filter=<%=filter%>" aria-label="Previous">
               				<span aria-hidden="true">&laquo;</span>
             			</a>
           			</li>
-          			<li><a href="#">1</a></li>
-          			<li><a href="#">2</a></li>
-          			<li><a href="#">3</a></li>
-          			<li><a href="#">4</a></li>
-          			<li><a href="#">5</a></li>
+					<% ([1,page-3].max..[page_count,page+3].min).step(1).each do |pg| %>
+          				<li <% if pg == page %>class="active"<% end %>>
+							<a href="/browse?q=<%=params[:q]%>&page=<%=pg%>&filter=<%=filter%>"><%= pg %></a></li>
+						</lit>
+					<% end %>
           			<li>
-            			<a href="#" aria-label="Next">
+            			<a href="/browse?q=<%=params[:q]%>&page=<%=page_count%>&filter=<%=filter%>" aria-label="Next">
               				<span aria-hidden="true">&raquo;</span>
             			</a>
           			</li>

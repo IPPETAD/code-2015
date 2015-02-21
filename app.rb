@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'bundler'
-require './db_user'
+require './src/db_user'
+require './src/db_conferences'
 Bundler.require(:default)
 Bundler.require(:development)
 
@@ -10,6 +11,7 @@ class MyApp < Sinatra::Base
 		enable :sessions
 		register Sinatra::Reloader if development?
 		set :db_user, UserData.new
+		set :db_conf, ConferenceData.new
 	end
 
 	helpers do
@@ -34,6 +36,22 @@ class MyApp < Sinatra::Base
 
 	get '/' do
 		erb :home
+	end
+
+	get '/browse' do
+		query = params[:q]
+		page = [(params[:page] || 1).to_i, 1].min
+		filters = params[:filter]
+
+		page_count = (settings.db_conf.countConferences() / 10)
+
+		erb :browse, :locals => {
+			:params => params,
+			:filter => filters,
+			:page => page,
+			:page_count => page_count+1,
+			:conferences => settings.db_conf.getConferences(10, page_count*(page-1))
+		}
 	end
 
 	#### AUTHENTICATION ####
@@ -72,10 +90,6 @@ class MyApp < Sinatra::Base
 		else
 			redirect to '/signup'
 		end
-	end
-
-	get '/browse' do
-		erb :browse
 	end
 
 end
