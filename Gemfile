@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'sinatra', require: 'sinatra/base'
+gem 'mongo'
 
 group :development do
 	gem 'pry'
