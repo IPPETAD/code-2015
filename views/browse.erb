@@ -18,7 +18,9 @@
 		</div>
     </div>
     <div class="col-lg-9">
-      	<div class="panel panel-default" data-bind="foreach: conferences">
+        <input id="search" class="form-control" placeholder="Filter..." data-bind="value: filter, valueUpdate: 'afterkeydown'"></input>
+        <br />
+      	<div class="panel panel-default" data-bind="foreach: filteredConferences()">
               <div class="panel-heading"><h4 data-bind="text: title"></h4></div>
             		<div class="panel-body">
               		<div class="media">
@@ -30,23 +32,20 @@
               		</div>
             		</div>
           	</div>
-        </div>
-
-            </template>"
     		<nav>
         		<ul class="pagination">
-          			<li>
-            			<a href="/browse?q=<%=params[:q]%>&page=1&filter=<%=filter%>" aria-label="Previous">
+          			<li data-bind="css: {disabled: filteredConferences().currentPage() == 1}">
+            			<a href="#" aria-label="Previous" data-bind="click: filteredConferences().movePrevious">
               				<span aria-hidden="true">&laquo;</span>
             			</a>
           			</li>
-					<% ([1,page-3].max..[page_count,page+3].min).step(1).each do |pg| %>
-          				<li <% if pg == page %>class="active"<% end %>>
-							<a href="/browse?q=<%=params[:q]%>&page=<%=pg%>&filter=<%=filter%>"><%= pg %></a></li>
-						</lit>
-					<% end %>
-          			<li>
-            			<a href="/browse?q=<%=params[:q]%>&page=<%=page_count%>&filter=<%=filter%>" aria-label="Next">
+                    <!-- ko foreach: buttons -->
+      				<li data-bind="css: {active: $root.filteredConferences().currentPage() == $data}">
+						<a href="#" data-bind='click: $root.goToPage, text: $data'></a></li>
+					</li>
+                    <!-- /ko -->
+          			<li data-bind="css: {disabled: filteredConferences().currentPage() == filteredConferences().pageCount()}">
+            			<a href="#" aria-label="Next" data-bind="click: filteredConferences().moveNext">
               				<span aria-hidden="true">&raquo;</span>
             			</a>
           			</li>
