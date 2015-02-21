@@ -1,0 +1,14 @@
+<div>
+  <% if session[:errors] and not session[:errors].empty? then %>
+    <div class="alert alert-danger" role="alert">
+      <% pop_errors.each do |error| %>
+      <p>
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        <%= error %>
+      </p>
+      <% end %>
+  </div>
+  <% end %>
+
+</div>
