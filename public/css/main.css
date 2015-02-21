@@ -37,6 +37,18 @@ body{
 h2{
   color: #fff;
 }
+
+#footer{
+  font-size: 11px;
+  text-align: center;
+  border-top: 2px solid #26a;
+  padding: 1ex;
+  margin-top: 1em;
+  color: #555;
+}
+#footer a{
+  color: #777;
+}
 /** COLLAPSABLE PANEL HEADINGS **/
 .toggle:hover {
     cursor: pointer;

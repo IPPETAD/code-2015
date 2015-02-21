@@ -1,12 +1,12 @@
 /**
  *  Conference: {
  *    id: String.
- *    name: String,
- *    imageUrl: String,
+ *    title: String,
+ *    image: String,
  *    topic: String,
- *    startTime: Date,
- *    endTime: Date,
+ *    time: TimeFrame
  *    description: String,
+ *    body: Markdown,
  *    tags: String[],
  *    venue: Venue,
  *    itinerary: ItineraryEntry[]
@@ -17,19 +17,27 @@ function Conference(data) {
   data = data || "";
 
   self.id = data.id;
-  self.name = ko.observable(data.name);
-  self.imageUrl = ko.observable(data.imageUrl);
+  self.title = ko.observable(data.title);
   self.topic = ko.observable(data.topic);
-  self.startTime = ko.observable(data.startTime);
-  self.endTime = ko.observable(data.endTime);
   self.description = ko.observable(data.description);
+  self.body = ko.observable(data.body);
+  self.image = ko.observable(data.image);
   self.tags = ko.observableArray(data.tags);
 
+  self.time = ko.observable(new TimeFrame(data.time));
   self.venue = ko.observable(new Venue(data.venue));
   data.itinerary = data.itinerary || [];
   self.itinerary = ko.observableArray(data.itinerary.map(function(item) {
     return new ItineraryEntry(item);
   }));
+}
+
+function TimeFrame(data) {
+  var self = this;
+  data = data || "";
+
+  self.start = ko.observable(data.start);
+  self.end = ko.observable(data.end);
 }
 
 /**
@@ -62,6 +70,14 @@ function Venue(data) {
     self.crossStreet = ko.observable(data.crossStreet || "");
     self.city = ko.observable(data.city || "");
     self.state = ko.observable(data.state || "");
+
+    self.line1 = ko.computed(function() {
+      return self.address() + " " + self.crossStreet();
+    });
+
+    self.line2 = ko.computed(function() {
+      return self.city() + ", " + self.state();
+    });
  }
 
  Location.prototype.toString = function() {

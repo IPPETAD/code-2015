@@ -36,28 +36,36 @@ class MyApp < Sinatra::Base
 
 	end
 
+	before do
+		logger.level = Logger::DEBUG
+	end
+
 	get '/' do
+		js :home
 		erb :home
 	end
 
 	get '/browse' do
+		@title = "Browse Conferences"
 		query = params[:q]
 		page = [(params[:page] || 1).to_i, 1].min
 		filters = params[:filter]
 
 		page_count = (settings.db_conf.countConferences() / 10)
-
+		confs = params[:q] ?
+			settings.db_conf.searchConferences(query) :
+			settings.db_conf.getConferences(10, page_count * (page - 1))
 		erb :browse, :locals => {
 			:params => params,
 			:filter => filters,
 			:page => page,
 			:page_count => page_count+1,
-			:conferences => settings.db_conf.getConferences(10, page_count*(page-1))
+			:conferences => confs
 		}
 	end
 
 	get '/venues' do
-		js :knockout, :knockout_models, 'foursquare', 'knockout/venues'
+		js :knockout, 'foursquare', 'knockout/venues'
 		erb :venues
 	end
 
@@ -68,6 +76,7 @@ class MyApp < Sinatra::Base
 	#### AUTHENTICATION ####
 
 	get '/login' do
+		@title = "Log In"
 		erb :login
 	end
 
@@ -87,6 +96,7 @@ class MyApp < Sinatra::Base
 	end
 
 	get '/signup' do
+		@title = "Sign Up"
 		erb :signup
 	end
 
@@ -104,7 +114,8 @@ class MyApp < Sinatra::Base
 	end
 
 	get '/conference' do
-		js :knockout, :knockout_models, 'knockout/conference'
+		@title = "Conference Details"
+		js :knockout, 'knockout/conference'
 		erb :conference
 	end
 
