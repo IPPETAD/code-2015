@@ -1,7 +1,11 @@
-require 'bundler'
-Bundler.require(:default)
-Bundler.require(:development)
+require 'rubygems'
+require 'bundler/setup'
+require 'sinatra'
 
-get '/' do
-	'Hello everyone!'
+class MyApp < Sinatra::Base
+
+	get '/' do
+		'Hello everyone!'
+	end
+
 end
