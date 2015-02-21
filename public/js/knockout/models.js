@@ -1,7 +1,7 @@
 /**
  *  Conference: {
  *    id: String.
- *    name: String,
+ *    title: String,
  *    imageUrl: String,
  *    topic: String,
  *    startTime: Date,
@@ -17,7 +17,7 @@ function Conference(data) {
   data = data || "";
 
   self.id = data.id;
-  self.name = ko.observable(data.name);
+  self.title = ko.observable(data.title);
   self.imageUrl = ko.observable(data.imageUrl);
   self.topic = ko.observable(data.topic);
   self.startTime = ko.observable(data.startTime);
