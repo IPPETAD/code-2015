@@ -24,9 +24,9 @@ module Sinatra
         case script
         when :knockout then ['https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js',
           'https://cdn.rawgit.com/SteveSanderson/knockout-projections/master/dist/knockout-projections.min.js',
-          'js/knockout/extensions.js',
-          'js/knockout/models.js']
-        else ['js/' + script.to_s + '.js']
+          '/js/knockout/extensions.js',
+          '/js/knockout/models.js']
+        else ['/js/' + script.to_s + '.js']
         end
       end
   end
