@@ -17,6 +17,19 @@ class MyApp < Sinatra::Base
 		def authenticated?
 			not session[:identity].nil?
 		end
+
+		# Get all errors and reset array
+		def pop_errors
+			tmp = session[:errors] || []
+			session[:errors] = []
+			return tmp
+		end
+
+		# Add error to array
+		def push_error(error)
+			(session[:errors] ||= []).push(error)
+		end
+
 	end
 
 	get '/' do
@@ -36,6 +49,7 @@ class MyApp < Sinatra::Base
 		if session[:identity]
 			redirect to '/'
 		else
+			push_error('Invalid login')
 			redirect to '/login'
 		end
 	end
@@ -52,7 +66,16 @@ class MyApp < Sinatra::Base
 	end
 
 	post '/signup' do
+		push_error("Email taken") if settings.db_user.getUser(params['username'])
+		push_error("Passwords must match") if not params['password'] == params['re-password'])
 
+		if not session[:errors] or session[:errors].empty?
+			session[:identity] = 1
+			settings.db_user.storeUser(params['username'], params['password'])
+			redirec to '/'
+		else
+			redirect to '/signup'
+		end
 	end
 
 end

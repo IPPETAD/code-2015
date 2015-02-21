@@ -22,5 +22,25 @@ class UserData
       "password" => password
     }).count.to_i == 0
   end
-  
+
+  #
+  # Currently just returns user exists
+  #
+  def getUser(email)
+    email.downcase!
+    @userData.find({
+      "email" => email
+    }).count.to_i == 0
+  end
+
+  #
+  # Store user info in database
+  #
+  def storeUser(email, password)
+    @userData.insert({
+      'email' => email,
+      'password' => password
+    })
+  end
+
 end
