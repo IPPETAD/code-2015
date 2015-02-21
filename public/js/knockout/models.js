@@ -62,6 +62,14 @@ function Venue(data) {
     self.crossStreet = ko.observable(data.crossStreet || "");
     self.city = ko.observable(data.city || "");
     self.state = ko.observable(data.state || "");
+
+    self.line1 = ko.computed(function() {
+      return self.address() + " " + self.crossStreet();
+    });
+
+    self.line2 = ko.computed(function() {
+      return self.city() + ", " + self.state();
+    });
  }
 
  Location.prototype.toString = function() {

@@ -57,7 +57,7 @@ class MyApp < Sinatra::Base
 	end
 
 	get '/venues' do
-		js :knockout, :knockout_models, 'foursquare', 'knockout/venues'
+		js :knockout, 'foursquare', 'knockout/venues'
 		erb :venues
 	end
 
@@ -100,7 +100,7 @@ class MyApp < Sinatra::Base
 	end
 
 	get '/conference' do
-		js :knockout, :knockout_models, 'knockout/conference'
+		js :knockout, 'knockout/conference'
 		erb :conference
 	end
 
