@@ -74,4 +74,8 @@ class MyApp < Sinatra::Base
 		end
 	end
 
+	get '/browse' do
+		erb :browse
+	end
+
 end
