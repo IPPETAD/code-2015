@@ -13,7 +13,7 @@ PieChart.prototype = {
         nv.addGraph(function() {
             self.chart = nv.models.pieChart()
                 .width(self.width)
-                .height(self.height)
+                .height(self.height-300)
                 .x(function(d) { return d.label })
                 .y(function(d) { return d.value })
                 .showLabels(false)
