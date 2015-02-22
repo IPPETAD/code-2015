@@ -39,7 +39,7 @@ Start with:
 * Running [MongoDB](https://www.mongodb.com)
 
 Download and run:
-	
+
 	git clone https://github.com/IPPETAD/code-2015
 	cd code-2015
 	
@@ -48,3 +48,5 @@ Download and run:
 	
 	bundle install					# To install sinatra
 	rvmsudo rackup					# To run portal
+
+Boom. Visit [localhost:8080](http://localhost:8080/).
