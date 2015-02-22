@@ -1,6 +1,6 @@
 $(".navbar").attr('data-step', 1);
 $(".navbar").attr('data-intro', 
-	  "<p>Hello, and welcome to CONstellation!</p>" 
+	  "<p>Hello, and welcome to á´stellation!</p>" 
 	+ "<p>Our purpose is to make conference planning and joining a breeze using intuitive design and open government data.</p>"
 	+ "<p>If you close the tour, you can continue from the footer on any page. Let's get started!</p>" );
 
@@ -24,7 +24,7 @@ $(".tour").attr("data-step", 5);
 $(".tour").attr("data-position", "top");
 $(".tour").attr('data-intro',
 	  "<p>Alright, time to move on!</p>"
-	+ "<p>You can come press the button to visit 'Browse', or end your tour here and look around on your own time!</p>");
+	+ "<p>Press the button below continue, or end your tour here and look around on your own time!</p>");
 
 var startTour = function() {
 	introJs().setOption('doneLabel', 'Browse!').start().oncomplete(function() {

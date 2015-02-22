@@ -6,13 +6,13 @@ $(".title").attr('data-intro',
 $(".time").attr('data-step', 2);
 $(".time").attr('data-intro',
 	  "<p>This line chart shows labour force growth for over a decade.</p>"
-	+ "<p>By default, this illustrates the growth for all industries. If you mouse over a certain year, you can see the respective value. By then selecting, the other charts filter to show the data for just that year</p>");
+	+ "<p>By default, this illustrates the growth for all industries. If you mouse over a certain year (with the tour closed), you can see the labour force value. When clicked, the other charts filter to show the data for that year.</p>");
 
 $(".pie").attr('data-step', 3);
 $(".pie").attr("data-position", "top");
 $(".pie").attr('data-intro',
 	  "<p>The pie chart shows the distribution of industries across Canada for the given year.</p>"
-	+ "<p>You can mouse over each slice to see details. If you click on a given slice, the line graph above dynamically shifts to show the growth for that industry over time.</p>");
+	+ "<p>You can mouse over each slice to see details. If you click on a given slice, the line graph above dynamically shifts to show the growth for that specific industry over time.</p>");
 
 $(".bar").attr('data-step', 4);
 $(".bar").attr("data-position", "top");
