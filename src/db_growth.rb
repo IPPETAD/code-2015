@@ -8,6 +8,7 @@ class GrowthData
     conn = MongoClientSingleton::instance
     @db = conn.db('james')
     @openData = @db['employed']
+	@shitData = @db['hacky']
   end
 
 	def get(industry, year, location)
@@ -15,6 +16,13 @@ class GrowthData
 		return getAllLocations(industry, year) if location.nil?
 		return getYearData(industry, location) if year.nil?
 		return getSpecific(industry, year, location);
+	end
+
+	def getGrowth(industry, location)
+		@shitData.find_one({
+			"industry" => industry,
+			"location" => location
+		})
 	end
 
 	def getSpecific(industry, year, location)
@@ -90,6 +98,14 @@ class GrowthData
 		]).map do |entry|
 			entry['_id']['year']
 		end
+	end
+
+	def getGrowth
+		var locations = ["Newfoundland and Labrador", "Prince Edward Island", "Nova Scotia", "New Brunswick", "Quebec", "Ontario", "Manitoba", "Saskatchewan", "Alberta", "British Columbia"]
+		locations.each do |loc|
+			
+		end
+
 	end
 
 end
