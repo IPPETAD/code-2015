@@ -8,6 +8,10 @@
     <input class="form-control" data-bind="value: conf().topic"></input>
 </div>
 <div class="form-group">
+    <label for="time">Time</label>
+    <input class="form-control" data-bind="value: conf().time"></input>
+</div>
+<div class="form-group">
     <label for="description">Description</label>
     <textarea class="form-control" data-bind="value: conf().description"></textarea>
 </div>
@@ -22,10 +26,6 @@
 <div class="form-group">
     <label for="tags">Tags</label>
     <input class="form-control" class="form-control" data-bind="value: conf().tags"></input>
-</div>
-<div class="form-group">
-    <label for="time">Time</label>
-    <input class="form-control" data-bind="value: conf().time"></input>
 </div>
 <div class="form-group">
     <label for="venue">Venue</label>
@@ -57,7 +57,7 @@
             <div class="tab-content">
                 <div class="tab-pane" id="industry">
                   <div class="row">
-                      <h4 class="info-text"> Let's start with the basic information</h4>
+                      <h4 class="info-text"> Let's start with your target industry.</h4>
                       <div class="col-sm-10 col-sm-offset-1">
                           <div class="form-group">
                             <label for="industry">Industry</label>
@@ -67,15 +67,11 @@
                   </div>
                 </div>
                 <div class="tab-pane" id="location">
-                    <h4 class="info-text">Where would you like to host?</h4>
+                    <h4 class="info-text"> Here are the biggest markets. </h4>
+										                    <p style="text-align: center">We recommend hosting in <span data-bind="text: maxCity"></span></p>
                     <div id="map-industry">
 
                     </div>
-                    <p data-bind="visible: city">We recommend hosting in <span data-bind="text: maxCity"></span></p>
-                    <select class="form-control" data-bind="options: provinces, optionsText: cities_list, optionsValue: cities_list, value: city">
-
-                    </select>
-
                 </div>
                 <div class="tab-pane" id="venue">
                     <div class="row">
