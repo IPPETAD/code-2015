@@ -1,4 +1,4 @@
-require 'rubygems'
+	require 'rubygems'
 require 'json/ext'
 require_relative './mongo_client_singleton'
 
@@ -25,6 +25,10 @@ class ConferenceData
 		@db.command({text: 'conferences', search: text})['results'].map do |result|
 			result['obj']
 		end
+	end
+
+	def putConference(conf)
+		@confData.insert(conf)
 	end
 
 end
