@@ -18,7 +18,25 @@
 			</div>
 			<div id="collapseOne" class="panel-collapse collapse in">
 				<div class="panel-body">
-
+          <h4>Industry</h4>
+          <div><input type="checkbox" value="Accommodation and food services" data-bind="checked: industryCheckBoxes"></input> Accommodation and food services</div>
+          <div><input type="checkbox" value="Agriculture" data-bind="checked: industryCheckBoxes"></input> Agriculture</div>
+          <div><input type="checkbox" value="Business, building and other support services" data-bind="checked: industryCheckBoxes"></input> Business, building and other support services</div>
+          <div><input type="checkbox" value="Construction" data-bind="checked: industryCheckBoxes"></input> Construction</div>
+          <div><input type="checkbox" value="Educational services" data-bind="checked: industryCheckBoxes"></input> Educational services</div>
+          <div><input type="checkbox" value="Finance, insurance, real estate and leasing" data-bind="checked: industryCheckBoxes"></input> Finance, insurance, real estate and leasing</div>
+          <div><input type="checkbox" value="Forestry, fishing, mining, quarrying, oil and gas" data-bind="checked: industryCheckBoxes"></input> Forestry, fishing, mining, quarrying, oil and gas</div>
+          <div><input type="checkbox" value="Goods-producing sector" data-bind="checked: industryCheckBoxes"></input> Goods-producing sector</div>
+          <div><input type="checkbox" value="Health care and social assistance" data-bind="checked: industryCheckBoxes"></input> Health care and social assistance</div>
+          <div><input type="checkbox" value="Information, culture and recreation" data-bind="checked: industryCheckBoxes"></input> Information, culture and recreation</div>
+          <div><input type="checkbox" value="Utilities" data-bind="checked: industryCheckBoxes"></input> Utilities</div>
+          <div><input type="checkbox" value="Manufacturing" data-bind="checked: industryCheckBoxes"></input> Manufacturing</div>
+          <div><input type="checkbox" value="Professional, scientific and technical services" data-bind="checked: industryCheckBoxes"></input> Professional, scientific and technical services</div>
+          <div><input type="checkbox" value="Public administration" data-bind="checked: industryCheckBoxes"></input> Public administration</div>
+          <div><input type="checkbox" value="Other services" data-bind="checked: industryCheckBoxes"></input> Other services</div>
+          <div><input type="checkbox" value="Services-producing sector" data-bind="checked: industryCheckBoxes"></input> Services-producing sector</div>
+          <div><input type="checkbox" value="Trade" data-bind="checked: industryCheckBoxes"></input> Trade</div>
+          <div><input type="checkbox" value="Transportation and warehousing" data-bind="checked: industryCheckBoxes"></input> Transportation and warehousing</div>
 				</div>
 			</div>
 		</div>
@@ -26,6 +44,12 @@
     <div class="col-sm-9">
         <input id="search" class="form-control" placeholder="Search..." data-bind="value: filter"></input>
         <br />
+        <div class="panel panel-default" data-bind="visible: conferences().length == 0">
+          <div class="panel-body">
+            Loading...
+          </div>
+        </div>
+
       	<div class="panel panel-default" data-bind="foreach: filteredConferences()">
           <div class="panel-heading">
             <h3 class="panel-title no-after">
