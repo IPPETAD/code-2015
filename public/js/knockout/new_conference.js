@@ -1,6 +1,7 @@
 searchVisible = 0;
 transparent = true;
 
+
 city_to_gps = {
     'Alberta': [53.544, -113.4909],
     'British Columbia': [48.4222, -123.3657],
@@ -37,12 +38,17 @@ function ConferenceViewModel() {
     self.venues = ko.observableArray();
     self.hotels = ko.observableArray();
 
+    circles = {}
+
     var map = L.map('map-industry').setView([45.4000, -75.6667], 4);
     self.industry.subscribe(function(value) {
         $.post('/api/industry/max', {industry: value}, self.cities)
     });
 
     self.cities.subscribe(function(cities) {
+        if(cities.length == 0) {
+            return;
+        }
         provinces = cities.filter(function(data) {
             return data._id.indexOf(',') == -1 && data._id != 'Canada'
         })
@@ -50,22 +56,19 @@ function ConferenceViewModel() {
             return parseFloat(b['value']) - parseFloat(a['value'])
         })
         console.log(provinces)
-        for(i in map._layers) {
-            if(map._layers._path != undefined) {
-                try {
-                map.removeLayer(map._layers[i]);
-                }
-                catch(e) {
-                    console.log("problem with " + e + map._layers[i]);
-                }
-            }
-        }
-        console.log(prov_to_city[provinces[0]['_id']])
         self.city(prov_to_city[provinces[0]['_id']]);
         for(var i = 0; i < provinces.length; i++) {
-            L.circle(city_to_gps[provinces[i]._id], parseInt(provinces[i].value) * 500, {
-                color: 'blue'
-            }).addTo(map);
+            if(circles[provinces[i]._id]) {
+                var value = parseFloat(provinces[i].value) * 1000
+                circles[provinces[i]._id].setRadius(value / 2);
+                circles[provinces[i]._id].bindPopup(value.toString() + ' workers in ' + provinces[i]._id);
+            } else {
+                var value = parseFloat(provinces[i].value) * 1000
+                circles[provinces[i]._id] = L.circle(city_to_gps[provinces[i]._id], value / 2, {
+                    color: 'blue'
+                }).addTo(map);
+                circles[provinces[i]._id].bindPopup(value.toString() + ' workers in ' + provinces[i]._id);
+            }
         }
     });
 
