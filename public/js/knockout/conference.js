@@ -34,7 +34,7 @@ function ConferenceViewModel() {
       }
     });
 
-    this.get('/conference', function() { this.app.runRoute('get', '#default') });
+    this.get('/conference', function() { this.app.runRoute('get', '#id=default') });
   }).run();
 
 }
