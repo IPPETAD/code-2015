@@ -110,11 +110,13 @@ function splitFilter(filter) {
 
 function replaceFilterPartial(partial, filter) {
   filter = filter || '';
-  var indices = findFilterPartial(partial, filter);
-  if (indices[0] > -1) {
-    var temp = filter.slice(indices[0], indices[1]);
-    filter = filter.replace(temp, partial);
+  var matches = findFilterPartial(partial, filter);
+  if (matches) {
+    filter = filter.replace(matches[0], '&' + partial);
   } else {
+    if (filter.length > 0) {
+     partial = '&' + partial;
+    }
     filter = filter + partial;
   }
 
@@ -123,10 +125,13 @@ function replaceFilterPartial(partial, filter) {
 
 function removeFilterPartial(partial, filter) {
   filter = filter || '';
-  var indices = findFilterPartial(partial, filter);
-  if (indices[0] > -1) {
-      var temp = filter.slice(indices[0], indices[1]);
-      filter = filter.replace(temp, '');
+  var matches = findFilterPartial(partial, filter);
+  if (matches) {
+      filter = filter.replace(matches[0], '');
+  }
+
+  if (filter[0] == '&') {
+    filter = filter.slice(1, filter.length)
   }
 
   return filter;
@@ -134,15 +139,6 @@ function removeFilterPartial(partial, filter) {
 
 function findFilterPartial(partial, filter) {
   filter = filter || '';
-  var index1 = filter.indexOf(partial.split('=')[0] + '=');
-  var index2 = -1;
-  if (index1 > -1) {
-    var temp = filter.slice(index1, filter.length);
-    index2 = temp.indexOf('&');
-    if (index2 == -1) {
-      index2 = filter.length;
-    }
-  }
-
-  return [index1, index2];
+  var arg = partial.split('=')[0];
+  return filter.match(new RegExp("&?" + arg + "=([^&]*)"));
 }
