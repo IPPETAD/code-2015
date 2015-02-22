@@ -1,42 +1,5 @@
 <link rel="stylesheet" href="/css/gsdk-base.css" charset="utf-8">
-<div class="form-group">
-    <label for="title">Title</label>
-    <input class="form-control" data-bind="value: conf().title"></input>
-</div>
-<div class="form-group">
-    <label for="topic">Topic</label>
-    <input class="form-control" data-bind="value: conf().topic"></input>
-</div>
-<div class="form-group">
-    <label for="time">Time</label>
-    <input class="form-control" data-bind="value: conf().time"></input>
-</div>
-<div class="form-group">
-    <label for="description">Description</label>
-    <textarea class="form-control" data-bind="value: conf().description"></textarea>
-</div>
-<div class="form-group">
-    <label for="body">Body</label>
-    <textarea class="form-control" data-bind="value: conf().body"></textarea>
-</div>
-<div class="form-group">
-    <label for="image">Image URL</label>
-    <input class="form-control" data-bind="value: conf().image"></input>
-</div>
-<div class="form-group">
-    <label for="tags">Tags</label>
-    <input class="form-control" class="form-control" data-bind="value: conf().tags"></input>
-</div>
-<div class="form-group">
-    <label for="venue">Venue</label>
-    <input class="form-control" data-bind="value: conf().venue"></input>
-</div>
-<div class="form-group">
-    <label for="itinerary">Itinerary</label>
-    <input class="form-control" data-bind="value: conf().itinerary"></input>
-</div>
 
-<button class="btn btn-default" data-bind="click: save">Submit</button>
 
 <div class="wizard-container" style="position: static !important;">
     <div class="card wizard-card ct-wizard-blue" id="wizard">
@@ -53,11 +16,12 @@
                 <li class="industry"><a href="#industry" data-toggle="tab">Industry</a></li>
                 <li class="location"><a href="#location" data-toggle="tab">Location</a></li>
                 <li class="venue"><a href="#venue" data-toggle="tab">Venue</a></li>
+								<li class="details"><a href="#details" data-toggle="tab">Details</a></li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane" id="industry">
-                  <div class="row">
-                      <h4 class="info-text"> Let's start with your target industry.</h4>
+                  <div class="industry_body row">
+                      <h4 class="industry-info-text info-text"> Let's start with your target industry.</h4>
                       <div class="col-sm-10 col-sm-offset-1">
                           <div class="form-group">
                             <label for="industry">Industry</label>
@@ -68,61 +32,49 @@
                 </div>
                 <div class="tab-pane" id="location">
                     <h4 class="info-text"> Here are the biggest markets. </h4>
-										                    <p style="text-align: center">We recommend hosting in <span data-bind="text: maxCity"></span></p>
-                    <div id="map-industry">
+                    <p style="text-align: center">We recommend hosting in <span data-bind="text: maxCity"></span></p>
+                    <div class="map" id="map-industry">
 
                     </div>
                     <br />
-                    <select class="form-control" data-bind="options: provinces, optionsText: cities_list, optionsValue: cities_list, value: city">
+                    <select class="location-select form-control" data-bind="options: provinces, optionsText: cities_list, optionsValue: cities_list, value: city">
 
                     </select>
                 </div>
                 <div class="tab-pane" id="venue">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <h4 class="info-text"> Are you living in a nice area? </h4>
-                        </div>
-                        <div class="col-sm-7 col-sm-offset-1">
-                             <div class="form-group">
-                                <labe>Street Name</label>
-                                <input type="text" class="form-control" placeholder="5h Avenue">
-                              </div>
-                        </div>
-                        <div class="col-sm-3">
-                             <div class="form-group">
-                                <label>Street Number</label>
-                                <input type="text" class="form-control" placeholder="242">
-                              </div>
-                        </div>
-                        <div class="col-sm-5 col-sm-offset-1">
-                             <div class="form-group">
-                                <label>City</label>
-                                <input type="text" class="form-control" placeholder="New York...">
-                              </div>
-                        </div>
-                        <div class="col-sm-5">
-                             <div class="form-group">
-                                <label>Country</label><br>
-                                 <select name="country" class="form-control">
-                                    <option value="Afghanistan"> Afghanistan </option>
-                                    <option value="Albania"> Albania </option>
-                                    <option value="Algeria"> Algeria </option>
-                                    <option value="American Samoa"> American Samoa </option>
-                                    <option value="Andorra"> Andorra </option>
-                                    <option value="Angola"> Angola </option>
-                                    <option value="Anguilla"> Anguilla </option>
-                                    <option value="Antarctica"> Antarctica </option>
-                                    <option value="...">...</option>
-                                </select>
-                              </div>
-                        </div>
-                    </div>
+
+                            <h4 class="info-text">Here are some convention centres</h4>
+                                      <div class="map" id="map-venues"></div>
                 </div>
+
+                <div class="tab-pane" id="details">
+
+                        <h4 class="info-text"> Let's get some more details. </h4>
+
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input class="form-control" data-bind="value: conf().title"></input>
+                        </div>
+                        <div class="form-group">
+                            <label for="topic">Topic</label>
+                            <input class="form-control" data-bind="value: conf().topic"></input>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea class="form-control" data-bind="value: conf().description"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="tags">Tags</label>
+                            <input class="form-control" class="form-control" data-bind="value: conf().tags"></input>
+                        </div>
+
+                    </div>
+                    <p data-bind="visible: conf().venue().name">Your current venue is <span data-bind="text: conf().venue().name"></p>
             </div>
             <div class="wizard-footer">
                     <div class="pull-right">
                         <input type='button' class='btn btn-next btn-fill btn-warning btn-wd btn-sm' name='next' value='Next' />
-                        <input type='button' class='btn btn-finish btn-fill btn-warning btn-wd btn-sm' name='finish' value='Finish' />
+                        <input type='button' class='btn btn-finish btn-fill btn-warning btn-wd btn-sm' name='finish' value='Finish'  data-bind="click: save"/>
 
                     </div>
                     <div class="pull-left">
