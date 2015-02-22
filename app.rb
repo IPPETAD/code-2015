@@ -148,5 +148,11 @@ class MyApp < Sinatra::Base
 		conf.to_json
 	end
 
+	get '/industries' do
+		content_type :json
+		settings.db_growth.getIndustryNames.delete_if do |e|
+			e == 'Total employed, all industries'
+		end.to_json
+	end
 
 end
