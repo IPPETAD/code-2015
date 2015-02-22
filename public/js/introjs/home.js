@@ -26,8 +26,12 @@ $(".tour").attr('data-intro',
 	  "<p>Alright, time to move on!</p>"
 	+ "<p>You can come press the button to visit 'Browse', or end your tour here and look around on your own time!</p>");
 
-$(".tour").on('click', function() {
+var startTour = function() {
 	introJs().setOption('doneLabel', 'Browse!').start().oncomplete(function() {
-		window.location.href = "browse?tour=true";
-	});
+        window.location.href = "browse?tour=true";
+    });
+};
+
+$(".tour").on('click', function() {
+	startTour();
 });
