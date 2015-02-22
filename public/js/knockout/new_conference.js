@@ -110,8 +110,9 @@ function ConferenceViewModel() {
     }).addTo(window.map);
 }
 
+var vm = new ConferenceViewModel(); // this is outside for introJS stuff.
 $(function() {
-    ko.applyBindings(new ConferenceViewModel())
+    ko.applyBindings(vm);
     $('[rel="tooltip"]').tooltip();
 
     $('#wizard').bootstrapWizard({
@@ -153,5 +154,5 @@ $(function() {
                 $(wizard).find('.btn-finish').hide();
             }
         }
-    });
+	});
 })
