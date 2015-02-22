@@ -63,23 +63,19 @@
                             <label for="industry">Industry</label>
                             <select class="form-control" data-bind="options: industries, value: industry"></select>
                           </div>
-                          <div class="form-group">
-                            <label for="exampleInputEmail1">Last Name</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Smith...">
-                          </div>
-                          <div class="form-group">
-                              <label>Email</label>
-                              <input type="email" class="form-control" placeholder="andrew@creative-tim.com">
-                          </div>
                       </div>
                   </div>
                 </div>
                 <div class="tab-pane" id="location">
-                    <h4 class="info-text"> What are you doing? </h4>
+                    <h4 class="info-text">Where would you like to host?</h4>
                     <div id="map-industry">
 
                     </div>
-                    <p>We recommend hosting in <span data-bind="text: city"></span></p>
+                    <p data-bind="visible: city">We recommend hosting in <span data-bind="text: maxCity"></span></p>
+                    <select class="form-control" data-bind="options: provinces, optionsText: cities_list, optionsValue: cities_list, value: city">
+
+                    </select>
+
                 </div>
                 <div class="tab-pane" id="venue">
                     <div class="row">

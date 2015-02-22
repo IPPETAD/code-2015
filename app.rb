@@ -115,7 +115,7 @@ class MyApp < Sinatra::Base
 	end
 
 	get '/conference/new' do
-		js :knockout, 'foursquare', 'knockout/new_conference', 'jquery.bootstrap.wizard', :introjs, 'introjs/conference_new', :leaflet
+		js :knockout, 'foursquare', 'knockout/new_conference', 'jquery.bootstrap.wizard', :introjs, 'introjs/conference_new', :leaf
 
 		erb :new_conference
 	end
@@ -150,7 +150,10 @@ class MyApp < Sinatra::Base
 
 	post '/api/industry/max' do
 		content_type :json
-		settings.db_growth.getIndustryMax(params[:industry]).to_json
+		settings.db_growth.getIndustryMax(params[:industry]).map do |e|
+			e['_id'] = e['_id'].to_s
+			e
+		end.to_json
 	end
 
 end

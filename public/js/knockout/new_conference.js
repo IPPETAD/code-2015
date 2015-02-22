@@ -34,9 +34,17 @@ function ConferenceViewModel() {
     self.industries = ko.observableArray();
     self.industry = ko.observable();
     self.cities = ko.observableArray();
+    self.provinces = ko.observableArray();
     self.city = ko.observable();
     self.venues = ko.observableArray();
     self.hotels = ko.observableArray();
+    self.maxCity = ko.computed(function() {
+        return self.provinces()[0] ? prov_to_city[self.provinces()[0]['_id']] : '';
+    });
+
+    self.cities_list = function(city) {
+        return prov_to_city[city['_id']]
+    }
 
     circles = {}
 
@@ -52,10 +60,9 @@ function ConferenceViewModel() {
         provinces = cities.filter(function(data) {
             return data._id.indexOf(',') == -1 && data._id != 'Canada'
         })
-        provinces.sort(function(a, b) {
+        self.provinces(provinces.sort(function(a, b) {
             return parseFloat(b['value']) - parseFloat(a['value'])
-        })
-        console.log(provinces)
+        }));
         self.city(prov_to_city[provinces[0]['_id']]);
         for(var i = 0; i < provinces.length; i++) {
             if(circles[provinces[i]._id]) {
@@ -73,6 +80,7 @@ function ConferenceViewModel() {
     });
 
     self.city.subscribe(function(value) {
+        console.log(value);
         fourSquare(value, 'convention', function(data) {
             self.venues(data);
         });
@@ -132,7 +140,7 @@ $(function() {
             var $current = index+1;
 
             var wizard = navigation.closest('.wizard-card');
-            
+
             if ($current == 2){
               window.map.invalidateSize();
             }
