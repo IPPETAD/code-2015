@@ -36,8 +36,12 @@ class ConferenceData
 	end
 
 	def putConference(conf)
-		puts conf
 		@confData.insert(conf)
+	end
+
+	def updateConference(conf)
+		conf['_id'] = BSON::ObjectId(conf['_id'].to_s)
+		@confData.update({'_id' => BSON::ObjectId(conf['_id'].to_s)}, conf)
 	end
 
 end
