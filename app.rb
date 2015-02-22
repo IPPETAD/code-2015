@@ -122,11 +122,10 @@ class MyApp < Sinatra::Base
 
 	get '/api/conference' do
 		content_type :json
-		page_count = (settings.db_conf.countConferences() / 10)
-		page = [(params[:page] || 1).to_i, 1].min
-		params[:q] ?
-			settings.db_conf.searchConferences(params[:q]).to_json :
-			settings.db_conf.getConferences(0, 0).to_json
+		settings.db_conf.getConferences(0, 0).map do |item|
+			item['_id'] = item['_id'].to_s
+			item
+		end.to_json
 	end
 
 	get '/api/conference/:id' do

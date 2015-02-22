@@ -1,3 +1,8 @@
+<style>
+  .panel-heading .no-after a:after {
+    content: ""
+  }
+</style>
 
 <h2>Find Conferences</h2>
 
@@ -20,17 +25,21 @@
         <input id="search" class="form-control" placeholder="Filter..." data-bind="value: filter, valueUpdate: 'afterkeydown'"></input>
         <br />
       	<div class="panel panel-default" data-bind="foreach: filteredConferences()">
-              <div class="panel-heading"><h4 data-bind="text: title"></h4></div>
-            		<div class="panel-body">
-              		<div class="media">
-                  		<div class="media-left">
-  							<img class="media-object" data-bind="attr: {src: image}">
-                  		</div>
-                  		<div class="media-body" data-bind="html: description">
-                  		</div>
-              		</div>
-            		</div>
-          	</div>
+          <div class="panel-heading">
+            <h3 class="panel-title no-after">
+              <a data-bind="text: title, attr: { href: '/conference#id=' + _id }"></a>
+            </h3>
+          </div>
+      		<div class="panel-body">
+        		<div class="media">
+          		<div class="media-left">
+                <img class="media-object" data-bind="attr: {src: image}">
+          		</div>
+          		<div class="media-body" data-bind="html: description">
+          		</div>
+        		</div>
+      		</div>
+      	</div>
     		<nav>
         		<ul class="pagination">
           			<li data-bind="css: {disabled: filteredConferences().currentPage() == 1}">
@@ -52,4 +61,3 @@
       		</nav>
 		</div>
 	</div>
-
