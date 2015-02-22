@@ -1,3 +1,10 @@
+/** CHARTS **/
+.nv-slice:hover {
+	cursor: pointer !important;
+}
+.nv-bar:hover {
+    cursor: pointer !important;
+}
 svg text {
     fill: white !important;
 }
