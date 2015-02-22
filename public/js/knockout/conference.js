@@ -19,7 +19,7 @@ function ConferenceViewModel() {
   };
 
   Sammy(function() {
-    this.get('#id=:id', function() {
+    this.get('#id/:id', function() {
       if (this.params.id === 'test') {
         self.conf(getTestConference());
       } else {
@@ -34,7 +34,7 @@ function ConferenceViewModel() {
       }
     });
 
-    this.get('/conference', function() { this.app.runRoute('get', '#id=default') });
+    this.get('/conference', function() { this.app.runRoute('get', '#id/default') });
   }).run();
 
 }
