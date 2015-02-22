@@ -2,7 +2,7 @@ searchVisible = 0;
 transparent = true;
 
 
-city_to_gps = {
+var prov_to_gps = {
     'Alberta': [53.544, -113.4909],
     'British Columbia': [48.4222, -123.3657],
     'Saskatchewan': [50.4547, -104.6067],
@@ -15,7 +15,7 @@ city_to_gps = {
     'New Brunswick': [45.9500, -67.6667]
 }
 
-prov_to_city = {
+var prov_to_city = {
     'Alberta': 'Edmonton, AB',
     'British Columbia': 'Victoria, BC',
     'Saskatchewan': 'Regina, SK',
@@ -26,6 +26,19 @@ prov_to_city = {
     'Newfoundland and Labrador': "St. John's, NL",
     'Prince Edward Island': 'Charlottetown, PEI',
     'New Brunswick': 'Fredericton, NB'
+}
+
+var city_to_gps = {
+    'Edmonton, AB': prov_to_gps['Alberta'],
+    'Victoria, BC': prov_to_gps['British Columbia'],
+    'Regina, SK': prov_to_gps['Saskatchewan'],
+    'Winnipeg, MB': prov_to_gps['Manitoba'],
+    'Toronto, ON': prov_to_gps['Ontario'],
+    'Quebec City, QC': prov_to_gps['Quebec'],
+    'Halifax, NS': prov_to_gps['Nova Scotia'],
+    'Newfoundland and Labrador': "St. John's, NL",
+    'Charlottetown, PEI': prov_to_gps['Prince Edward Island'],
+    'Fredericton, NB': prov_to_gps['New Brunswick']
 }
 
 function ConferenceViewModel() {
@@ -46,9 +59,19 @@ function ConferenceViewModel() {
         return prov_to_city[city['_id']]
     }
 
-    circles = {}
+    var circles = {}
+    var markers = []
 
-    window.map = L.map('map-industry').setView([45.4000, -75.6667], 4);
+    window.mapIndustry = L.map('map-industry').setView([55, -97], 4);
+    window.mapVenues = L.map('map-venues').setView([55, -97], 4);
+    var industryTiles = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        maxZoom: 18
+    }).addTo(window.mapIndustry)
+    var venueTiles = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        maxZoom: 18
+    }).addTo(window.mapVenues);
     self.industry.subscribe(function(value) {
         $.post('/api/industry/max', {industry: value}, self.cities)
     });
@@ -71,23 +94,42 @@ function ConferenceViewModel() {
                 circles[provinces[i]._id].bindPopup(value.toString() + ' workers in ' + provinces[i]._id);
             } else {
                 var value = parseFloat(provinces[i].value) * 1000
-                circles[provinces[i]._id] = L.circle(city_to_gps[provinces[i]._id], value / 2, {
+                circles[provinces[i]._id] = L.circle(prov_to_gps[provinces[i]._id], value / 2, {
                     color: 'blue'
-                }).addTo(map);
+                }).addTo(mapIndustry);
                 circles[provinces[i]._id].bindPopup(value.toString() + ' workers in ' + provinces[i]._id);
             }
         }
     });
 
     self.city.subscribe(function(value) {
-        console.log(value);
+        window.mapVenues.setView(city_to_gps[value], 10)
+        venueTiles.redraw()
         fourSquare(value, 'convention', function(data) {
-            self.venues(data);
+            console.log(data['response']['venues']);
+            self.venues(data['response']['venues']);
         });
         fourSquare(value, 'hotel', function(data) {
             self.hotels(data);
         });
     });
+
+    self.venues.subscribe(function(venues) {
+        for(var i = 0; i < markers.length; i++) {
+            window.mapVenues.removeLayer(markers[i])
+        }
+        markers = []
+        for(var i = 0; i < venues.length; i++) {
+            var ll = new L.LatLng(
+                venues[i]['location']['lat'],
+                venues[i]['location']['lng']
+            )
+            var marker = new L.marker(ll).bindPopup(venues[i]['name'])
+            markers.push(marker)
+            window.mapVenues.addLayer(marker)
+        }
+    })
+
 
     self.save = function() {
         var con = ko.toJSON(self.conf)
@@ -104,10 +146,7 @@ function ConferenceViewModel() {
         self.industries(data);
     })
 
-    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-        maxZoom: 18
-    }).addTo(window.map);
+
 }
 
 var vm = new ConferenceViewModel(); // this is outside for introJS stuff.
@@ -132,10 +171,6 @@ $(function() {
            }
            navigation.find('li').css('width',$width + '%');
         },
-         onTabClick : function(tab, navigation, index){
-            // Disable the posibility to click on tabs
-            return false;
-        },
         onTabShow: function(tab, navigation, index) {
             var $total = navigation.find('li').length;
             var $current = index+1;
@@ -143,7 +178,10 @@ $(function() {
             var wizard = navigation.closest('.wizard-card');
 
             if ($current == 2){
-              window.map.invalidateSize();
+              window.mapIndustry.invalidateSize();
+            }
+            if ($current == 3) {
+                window.mapVenues.invalidateSize();
             }
             // If it's the last tab then hide the last button and show the finish instead
             if($current >= $total) {
