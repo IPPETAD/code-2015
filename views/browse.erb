@@ -18,7 +18,8 @@
 			</div>
 			<div id="collapseOne" class="panel-collapse collapse in">
 				<div class="panel-body">
-
+          <h4>Industry</h4>
+          <div><input type="checkbox" value="Agriculture" data-bind="checked: industryCheckBoxes"></input> Agriculture</div>
 				</div>
 			</div>
 		</div>
@@ -26,6 +27,12 @@
     <div class="col-sm-9">
         <input id="search" class="form-control" placeholder="Search..." data-bind="value: filter"></input>
         <br />
+        <div class="panel panel-default" data-bind="visible: conferences().length == 0">
+          <div class="panel-body">
+            Loading...
+          </div>
+        </div>
+
       	<div class="panel panel-default" data-bind="foreach: filteredConferences()">
           <div class="panel-heading">
             <h3 class="panel-title no-after">

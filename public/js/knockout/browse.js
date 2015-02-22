@@ -1,7 +1,7 @@
 function BrowseViewModel() {
     var self = this;
 
-    self.conferences = ko.observableArray();
+    self.conferences = ko.observableArray([]);
     self.filter = ko.observable();
     self.filteredConferences = ko.computed(function() {
         return self.conferences.filter(function(conf) {
@@ -42,23 +42,32 @@ function BrowseViewModel() {
         return pages;
     });
 
-    self.filterCheckBoxes = ko.observableArray([]);
-    self.filterCheckBoxes.subscribe(function (values) {
-
+    self.industryCheckBoxes = ko.observableArray([]);
+    self.industryCheckBoxes.subscribe(function (values) {
+      if (values.length > 0) {
+        self.setFilterPartial('industry=' + values.join(' '));
+      } else {
+        self.removeFilterPartial('industry=');
+      }
     });
 
     self.setFilterPartial = function(partial) {
       self.filter(replaceFilterPartial(partial, self.filter()));
     };
 
+    self.removeFilterPartial = function(partial) {
+      self.filter(removeFilterPartial(partial, self.filter()));
+    }
+
     self.goToPage = function(page) {
         self.filteredConferences().currentPage(page);
     };
 
     $.get('/api/conference', function(data) {
-        self.conferences(data.map(function(conference) {
-            return new Conference(conference);
-        }));
+      console.log('Retrieved ' + data.length + ' conferences');
+      self.conferences(data.map(function(conference) {
+          return new Conference(conference);
+      }));
     });
 
     self.filter.subscribe(function(filter) {
@@ -100,20 +109,36 @@ function splitFilter(filter) {
 }
 
 function replaceFilterPartial(partial, filter) {
-  var partials = partial.split('&');
-  partials.forEach(function(part) {
-    var index = filter.indexOf(part.split('=')[0] + '=');
-    if (index > -1) {
-      var temp = filter.slice(index, filter.length);
-      var index2 = temp.indexOf('&');
-      if (index2 > -1) {
-        temp = temp.slice(0, index2);
-      }
-      filter = filter.replace(temp, part);
-    } else {
-      filter = filter + part;
+  filter = filter || '';
+  var matches = findFilterPartial(partial, filter);
+  if (matches) {
+    filter = filter.replace(matches[0], '&' + partial);
+  } else {
+    if (filter.length > 0) {
+     partial = '&' + partial;
     }
-  });
+    filter = filter + partial;
+  }
 
   return filter;
+}
+
+function removeFilterPartial(partial, filter) {
+  filter = filter || '';
+  var matches = findFilterPartial(partial, filter);
+  if (matches) {
+      filter = filter.replace(matches[0], '');
+  }
+
+  if (filter[0] == '&') {
+    filter = filter.slice(1, filter.length)
+  }
+
+  return filter;
+}
+
+function findFilterPartial(partial, filter) {
+  filter = filter || '';
+  var arg = partial.split('=')[0];
+  return filter.match(new RegExp("&?" + arg + "=([^&]*)"));
 }
