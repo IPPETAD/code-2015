@@ -137,7 +137,7 @@ class MyApp < Sinatra::Base
 	end
 
 	post '/api/conference/new' do
-		"/conference##{settings.db_conf.putConference(params[:conf])}"
+		"/conference#id=#{settings.db_conf.putConference(params[:conf])}"
 	end
 
 	get '/api/industry' do
@@ -145,6 +145,11 @@ class MyApp < Sinatra::Base
 		settings.db_growth.getIndustryNames.delete_if do |e|
 			e == 'Total employed, all industries'
 		end.to_json
+	end
+
+	post '/api/industry/max' do
+		content_type :json
+		settings.db_growth.getIndustryMax(params[:industry]).to_json
 	end
 
 end

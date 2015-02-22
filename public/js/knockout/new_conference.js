@@ -6,9 +6,14 @@ function ConferenceViewModel() {
     self.conf = ko.observable(new Conference());
     self.industries = ko.observableArray();
     self.industry = ko.observable();
+    self.cities = ko.observableArray();
     self.city = ko.observable();
     self.venues = ko.observableArray();
     self.hotels = ko.observableArray();
+
+    self.industry.subscribe(function(value) {
+        $.post('/api/industry/max', {industry: value}, self.cities)
+    })
 
     self.city.subscribe(function(value) {
         fourSquare(value, 'convention', function(data) {
