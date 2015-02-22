@@ -13,6 +13,7 @@ YearChart.prototype = {
 			self.chart = nv.models.discreteBarChart()
 				.x(function(d) { return d.label })
 				.y(function(d) { return d.value })
+                .height(300)
 				.staggerLabels(true)
 				.tooltips(true)
 				.showXAxis(false)
@@ -33,6 +34,7 @@ YearChart.prototype = {
 		d3.select(this.id)
 			.datum(data2)
 			.transition().duration(500)
+            .attr('height', 300)
 			.call(this.chart);
 
 		if (this.callback) this.onBarClick(this.callback);
