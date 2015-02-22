@@ -11,6 +11,6 @@ group :development do
 	gem 'sinatra-contrib', require: 'sinatra/reloader'
 end
 
-group :linux do
+group :linux, :darwin do
 	gem 'bson_ext'
 end
