@@ -1,7 +1,7 @@
 function BrowseViewModel() {
     var self = this;
 
-    self.conferences = ko.observableArray();
+    self.conferences = ko.observableArray([]);
     self.filter = ko.observable();
     self.filteredConferences = ko.computed(function() {
         return self.conferences.filter(function(conf) {
