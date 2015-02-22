@@ -137,6 +137,10 @@ class MyApp < Sinatra::Base
 		conf.to_json
 	end
 
+	post '/api/conference/:id' do
+		settings.db_conf.updateConference(params[:confpdb])	
+	end
+
 	post '/api/conference/new' do
 		"/conference#id/#{settings.db_conf.putConference(params[:conf])}"
 	end
