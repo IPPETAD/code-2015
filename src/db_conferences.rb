@@ -36,6 +36,7 @@ class ConferenceData
 	end
 
 	def putConference(conf)
+		puts conf
 		@confData.insert(conf)
 	end
 

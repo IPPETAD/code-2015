@@ -148,13 +148,14 @@ function ConferenceViewModel() {
 
 
     self.save = function() {
-        var con = ko.toJSON(self.conf)
+        var con = ko.toJS(self.conf)
         con.tags = con.tags.split(' ') || []
         $.post('/api/conference/new', {
             conf: con
         }, function(data) {
+            console.log(data)
             window.location.replace(data);
-        })
+        });
     }
 
     $.get('/api/industry', function(data) {
