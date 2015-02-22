@@ -133,7 +133,7 @@ class MyApp < Sinatra::Base
 	end
 
 	get '/conference/new' do
-		js :knockout, 'knockout/new_conference'
+		js :knockout, 'foursquare', 'knockout/new_conference', 'jquery.bootstrap.wizard'
 		erb :new_conference
 	end
 

@@ -14,7 +14,7 @@ YearChart.prototype = {
 				.x(function(d) { return d.label })
 				.y(function(d) { return d.value })
 				.staggerLabels(true)
-				.tooltips(true) 
+				.tooltips(true)
 				.showXAxis(false)
 				.showValues(true);
 
@@ -30,11 +30,11 @@ YearChart.prototype = {
 			values: data
 		}];
 
-		d3.select(this.id) 
+		d3.select(this.id)
 			.datum(data2)
 			.transition().duration(500)
 			.call(this.chart);
-	
+
 		if (this.callback) this.onBarClick(this.callback);
 
 	},
