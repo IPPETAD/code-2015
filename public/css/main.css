@@ -61,7 +61,7 @@ h2{
   color: #fff;
 }
 
-.card{
+.card, .panel, .jumbotron{
 	color: #111;
 }
 
