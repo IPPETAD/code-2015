@@ -13,7 +13,11 @@ function BrowseViewModel() {
             // If single item, filter on title and description
             if (filters.length == 1 && typeof filters[0] == 'string') {
               return conf.title().toLowerCase().indexOf(filters[0].toLowerCase()) > -1 ||
-                conf.description().toLowerCase().indexOf(filters[0].toLowerCase()) > -1;
+                conf.description().toLowerCase().indexOf(filters[0].toLowerCase()) > -1 ||
+                conf.tags().some(function(tag) {
+                  console.log(tag);
+                  return tag.toLowerCase().indexOf(filters[0].toLowerCase()) > -1;
+                });
             }
 
             // multiple items, check if field exists and filter on it
@@ -66,7 +70,10 @@ function BrowseViewModel() {
     $.get('/api/conference', function(data) {
       console.log('Retrieved ' + data.length + ' conferences');
       self.conferences(data.map(function(conference) {
-          return new Conference(conference);
+        if (typeof conference.tags == 'string') {
+          conference.tags = conference.tags.split(',');
+        }
+        return new Conference(conference);
       }));
     });
 
