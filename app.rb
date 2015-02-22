@@ -120,4 +120,14 @@ class MyApp < Sinatra::Base
 		erb :conference
 	end
 
+	get '/conference/new' do
+		js :knockout, 'knockout/new_conference'
+		erb :new_conference
+	end
+
+	post '/conference/new' do
+		settings.db_conf.putConference(params[:conf])
+		'/conference'
+	end
+
 end

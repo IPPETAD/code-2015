@@ -14,7 +14,7 @@
  */
 function Conference(data) {
   var self = this;
-  data = data || "";
+  data = data || {};
 
   self.id = data.id;
   self.title = ko.observable(data.title);
@@ -22,6 +22,7 @@ function Conference(data) {
   self.description = ko.observable(data.description);
   self.body = ko.observable(data.body);
   self.image = ko.observable(data.image);
+  data.tags = data.tags || [];
   self.tags = ko.observableArray(data.tags);
 
   self.time = ko.observable(new TimeFrame(data.time));
