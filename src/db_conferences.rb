@@ -1,5 +1,6 @@
-	require 'rubygems'
+require 'rubygems'
 require 'json/ext'
+require 'bson'
 require_relative './mongo_client_singleton'
 
 class ConferenceData
@@ -19,6 +20,12 @@ class ConferenceData
 			:skip => skip,
 			:limit => count
 		}).to_a
+	end
+
+	def getConference(id)
+		@confData.find_one({
+			'_id' => BSON::ObjectId(id)
+			})
 	end
 
 	def searchConferences(text)

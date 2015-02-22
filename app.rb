@@ -131,7 +131,7 @@ class MyApp < Sinatra::Base
 		js :knockout, 'knockout/conference'
 		erb :conference
 	end
-
+	
 	get '/conference/new' do
 		js :knockout, 'knockout/new_conference'
 		erb :new_conference
@@ -141,5 +141,13 @@ class MyApp < Sinatra::Base
 		settings.db_conf.putConference(params[:conf])
 		'/conference'
 	end
+
+	get '/conference/:id' do
+		content_type :json
+		conf = settings.db_conf.getConference(params[:id])
+		conf['_id'] = conf['_id'].to_s
+		conf.to_json
+	end
+
 
 end
