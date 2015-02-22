@@ -87,14 +87,14 @@ function ConferenceViewModel() {
             return parseFloat(b['value']) - parseFloat(a['value'])
         }));
         self.city(prov_to_city[provinces[0]['_id']]);
+        var max = provinces[0]['value'] * 1000
         for(var i = 0; i < provinces.length; i++) {
+            var value = parseFloat(provinces[i].value) * 1000
             if(circles[provinces[i]._id]) {
-                var value = parseFloat(provinces[i].value) * 1000
-                circles[provinces[i]._id].setRadius(value / 2);
+                circles[provinces[i]._id].setRadius(350000 * value / max);
                 circles[provinces[i]._id].bindPopup(value.toString() + ' workers in ' + provinces[i]._id);
             } else {
-                var value = parseFloat(provinces[i].value) * 1000
-                circles[provinces[i]._id] = L.circle(prov_to_gps[provinces[i]._id], value / 2, {
+                circles[provinces[i]._id] = L.circle(prov_to_gps[provinces[i]._id], 350000 * value / max, {
                     color: 'blue',
                     className: provinces[i]._id
                 }).addTo(mapIndustry);
