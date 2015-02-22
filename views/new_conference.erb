@@ -22,6 +22,7 @@
                 <div class="tab-pane" id="industry">
                   <div class="industry_body row">
                       <h4 class="industry-info-text info-text"> Let's start with your target industry.</h4>
+											<p style="text-align: center">We'll suggest some locations near a large workforce in that industry.</p>
                       <div class="col-sm-10 col-sm-offset-1">
                           <div class="form-group">
                             <label for="industry">Industry</label>
@@ -32,7 +33,7 @@
                 </div>
                 <div class="tab-pane" id="location">
                     <h4 class="info-text"> Here are the biggest markets. </h4>
-                    <p style="text-align: center">We recommend hosting in <span data-bind="text: maxCity"></span></p>
+                    <p style="text-align: center" data-bind="visible: maxCity">We recommend hosting in <span data-bind="text: maxCity"></span></p>
                     <div class="map" id="map-industry">
 
                     </div>
@@ -44,6 +45,7 @@
                 <div class="tab-pane" id="venue">
 
                             <h4 class="info-text">Here are some convention centres</h4>
+                            <p style="text-align: center">Pick one if you'd like.</p>
                                       <div class="map" id="map-venues"></div>
                 </div>
 
