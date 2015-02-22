@@ -40,7 +40,7 @@ function ConferenceViewModel() {
 
     circles = {}
 
-    var map = L.map('map-industry').setView([45.4000, -75.6667], 4);
+    window.map = L.map('map-industry').setView([45.4000, -75.6667], 4);
     self.industry.subscribe(function(value) {
         $.post('/api/industry/max', {industry: value}, self.cities)
     });
@@ -99,7 +99,7 @@ function ConferenceViewModel() {
     L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
         maxZoom: 18
-    }).addTo(map);
+    }).addTo(window.map);
 }
 
 $(function() {
@@ -132,7 +132,10 @@ $(function() {
             var $current = index+1;
 
             var wizard = navigation.closest('.wizard-card');
-
+            
+            if ($current == 2){
+              window.map.invalidateSize();
+            }
             // If it's the last tab then hide the last button and show the finish instead
             if($current >= $total) {
                 $(wizard).find('.btn-next').hide();
