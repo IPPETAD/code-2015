@@ -46,7 +46,7 @@
                             <h4 class="info-text">Here are some convention centres</h4>
                                       <div class="map" id="map-venues"></div>
                 </div>
-                
+
                 <div class="tab-pane" id="details">
 
                         <h4 class="info-text"> Let's get some more details. </h4>
@@ -69,8 +69,7 @@
                         </div>
 
                     </div>
-
-
+                    <p data-bind="visible: conf().venue().name">Your current venue is <span data-bind="text: conf().venue().name"></p>
             </div>
             <div class="wizard-footer">
                     <div class="pull-right">
