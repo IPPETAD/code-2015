@@ -3,6 +3,7 @@ require 'bundler'
 require './sinatra/javascript'
 require './src/db_user'
 require './src/db_conferences'
+require './src/db_growth'
 Bundler.require(:default)
 Bundler.require(:development)
 
@@ -14,6 +15,7 @@ class MyApp < Sinatra::Base
 		register Sinatra::Reloader if development?
 		set :db_user, UserData.new
 		set :db_conf, ConferenceData.new
+		set :db_growth, GrowthData.new
 	end
 
 	helpers do
@@ -63,6 +65,16 @@ class MyApp < Sinatra::Base
 	get '/venues' do
 		js :knockout, 'foursquare', 'knockout/venues'
 		erb :venues
+	end
+
+	get '/growth' do
+		js :nvd3, 'growth/pie', 'growth/years', 'growth/ui'
+		erb :growth
+	end
+
+	post '/growth/yearly' do
+		puts params
+		return settings.db_growth.get(params["industry"],params["year"],params["location"]).to_json
 	end
 
 	get '/conferences' do
@@ -118,6 +130,16 @@ class MyApp < Sinatra::Base
 		@title = "Conference Details"
 		js :knockout, 'knockout/conference'
 		erb :conference
+	end
+
+	get '/conference/new' do
+		js :knockout, 'knockout/new_conference'
+		erb :new_conference
+	end
+
+	post '/conference/new' do
+		settings.db_conf.putConference(params[:conf])
+		'/conference'
 	end
 
 end
