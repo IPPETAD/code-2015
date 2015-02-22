@@ -156,6 +156,6 @@ h2{
 }
 
 /** MAP STUFF **/
-#map-industry {
+.map {
 	height: 500px;
 }
