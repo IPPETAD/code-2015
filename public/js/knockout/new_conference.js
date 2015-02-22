@@ -1,16 +1,86 @@
 searchVisible = 0;
 transparent = true;
 
+
+city_to_gps = {
+    'Alberta': [53.544, -113.4909],
+    'British Columbia': [48.4222, -123.3657],
+    'Saskatchewan': [50.4547, -104.6067],
+    'Manitoba': [49.8994, -97.1392],
+    'Ontario': [43.700, -79.400],
+    'Quebec': [46.8167, -71.2167],
+    'Nova Scotia': [44.649050, -63.575794],
+    'Newfoundland and Labrador': [47.5675, -52.7072],
+    'Prince Edward Island': [46.2400, -63.1399],
+    'New Brunswick': [45.9500, -67.6667]
+}
+
+prov_to_city = {
+    'Alberta': 'Edmonton, AB',
+    'British Columbia': 'Victoria, BC',
+    'Saskatchewan': 'Regina, SK',
+    'Manitoba': 'Winnipeg, MB',
+    'Ontario': 'Toronto, ON',
+    'Quebec': 'Quebec City, QC',
+    'Nova Scotia': 'Halifax, NS',
+    'Newfoundland and Labrador': "St. John's, NL",
+    'Prince Edward Island': 'Charlottetown, PEI',
+    'New Brunswick': 'Fredericton, NB'
+}
+
 function ConferenceViewModel() {
     var self = this;
     self.conf = ko.observable(new Conference());
     self.industries = ko.observableArray();
     self.industry = ko.observable();
+    self.cities = ko.observableArray();
+    self.provinces = ko.observableArray();
     self.city = ko.observable();
     self.venues = ko.observableArray();
     self.hotels = ko.observableArray();
+    self.maxCity = ko.computed(function() {
+        return self.provinces()[0] ? prov_to_city[self.provinces()[0]['_id']] : '';
+    });
+
+    self.cities_list = function(city) {
+        return prov_to_city[city['_id']]
+    }
+
+    circles = {}
+
+    window.map = L.map('map-industry').setView([45.4000, -75.6667], 4);
+    self.industry.subscribe(function(value) {
+        $.post('/api/industry/max', {industry: value}, self.cities)
+    });
+
+    self.cities.subscribe(function(cities) {
+        if(cities.length == 0) {
+            return;
+        }
+        provinces = cities.filter(function(data) {
+            return data._id.indexOf(',') == -1 && data._id != 'Canada'
+        })
+        self.provinces(provinces.sort(function(a, b) {
+            return parseFloat(b['value']) - parseFloat(a['value'])
+        }));
+        self.city(prov_to_city[provinces[0]['_id']]);
+        for(var i = 0; i < provinces.length; i++) {
+            if(circles[provinces[i]._id]) {
+                var value = parseFloat(provinces[i].value) * 1000
+                circles[provinces[i]._id].setRadius(value / 2);
+                circles[provinces[i]._id].bindPopup(value.toString() + ' workers in ' + provinces[i]._id);
+            } else {
+                var value = parseFloat(provinces[i].value) * 1000
+                circles[provinces[i]._id] = L.circle(city_to_gps[provinces[i]._id], value / 2, {
+                    color: 'blue'
+                }).addTo(map);
+                circles[provinces[i]._id].bindPopup(value.toString() + ' workers in ' + provinces[i]._id);
+            }
+        }
+    });
 
     self.city.subscribe(function(value) {
+        console.log(value);
         fourSquare(value, 'convention', function(data) {
             self.venues(data);
         });
@@ -33,12 +103,16 @@ function ConferenceViewModel() {
         data.unshift(' ');
         self.industries(data);
     })
+
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        maxZoom: 18
+    }).addTo(window.map);
 }
 
 $(function() {
     ko.applyBindings(new ConferenceViewModel())
     $('[rel="tooltip"]').tooltip();
-
 
     $('#wizard').bootstrapWizard({
         'tabClass': 'nav nav-pills',
@@ -67,6 +141,9 @@ $(function() {
 
             var wizard = navigation.closest('.wizard-card');
 
+            if ($current == 2){
+              window.map.invalidateSize();
+            }
             // If it's the last tab then hide the last button and show the finish instead
             if($current >= $total) {
                 $(wizard).find('.btn-next').hide();

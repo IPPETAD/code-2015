@@ -13,13 +13,15 @@ PieChart.prototype = {
         nv.addGraph(function() {
             self.chart = nv.models.pieChart()
                 .width(self.width)
-                .height(self.height)
+                .height(self.height-300)
                 .x(function(d) { return d.label })
                 .y(function(d) { return d.value })
                 .showLabels(false)
 				.showLegend(false);
 
 			self.updateChart(data)
+ 			nv.utils.windowResize(function() { self.chart.update() });
+
 
             return self.chart;
         });
@@ -31,7 +33,7 @@ PieChart.prototype = {
             .datum(data)
             .transition().duration(1200)
 			.attr('width', this.width)
-			.attr('height', this.height-230)
+			.attr('height', this.height)
             .call(this.chart);
 
 		if (this.callback) this.onSliceClick(this.callback);

@@ -1,6 +1,6 @@
 <link href="/vendor/nvd3/nv.d3.css" rel="stylesheet"></link>
 
-<h1>Industry Growth</h1>
+<h1 class="title">Industry Growth</h1>
 
 <div class="alert alert-warning" role="alert">
   <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -12,8 +12,14 @@
 <hr />
 
 <h4 data-bind="text: timeTitle"></h3>
-<div><svg id="time_lapse"></svg></div>
+<div class="time"><svg id="time_lapse"></svg></div>
 
 <h4 data-bind="text: pieTitle"></h3>
-<div><svg id="pie_chart"></svg></div>
-<div><svg id="year_chart"></svg></div>
+<div class="row">
+	<div class="col-md-3">
+		<div style="height: 300px;" class="pie"><svg id="pie_chart"></svg></div>
+	</div>
+	<div class="col-md-9">
+		<div style="height: 300px;" class="bar"><svg id="year_chart"></svg></div>
+	</div>
+</div>
