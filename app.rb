@@ -115,7 +115,7 @@ class MyApp < Sinatra::Base
 	end
 
 	get '/conference/new' do
-		js :knockout, 'foursquare', 'knockout/new_conference', 'jquery.bootstrap.wizard', :introjs, 'introjs/conference_new', :leaf
+		js :knockout, :leaf, 'foursquare', 'knockout/new_conference', 'jquery.bootstrap.wizard', :introjs, 'introjs/conference_new'
 
 		erb :new_conference
 	end
