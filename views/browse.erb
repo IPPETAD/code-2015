@@ -50,7 +50,7 @@
           </div>
         </div>
 
-      	<div class="panel panel-default" data-bind="foreach: filteredConferences()">
+      	<div class="panel panel-default" data-bind="foreach: filteredConferences.currentPageData">
           <div class="panel-heading">
             <h3 class="panel-title no-after">
               <a data-bind="text: title, attr: { href: '/conference#id/' + _id }"></a>
@@ -68,18 +68,18 @@
       	</div>
     		<nav>
         		<ul class="pagination">
-          			<li data-bind="css: {disabled: filteredConferences().currentPage() == 1}">
-            			<a href="#" aria-label="Previous" data-bind="click: filteredConferences().movePrevious">
+          			<li data-bind="css: {disabled: filteredConferences.currentPage() == 1}">
+            			<a href="#" aria-label="Previous" data-bind="click: filteredConferences.movePrevious">
               				<span aria-hidden="true">&laquo;</span>
             			</a>
           			</li>
                     <!-- ko foreach: buttons -->
-      				<li data-bind="css: {active: $root.filteredConferences().currentPage() == $data}">
+      				<li data-bind="css: {active: $root.filteredConferences.currentPage() == $data}">
 						<a href="#" data-bind='click: $root.goToPage, text: $data'></a></li>
 					</li>
                     <!-- /ko -->
-          			<li data-bind="css: {disabled: filteredConferences().currentPage() == filteredConferences().pageCount()}">
-            			<a href="#" aria-label="Next" data-bind="click: filteredConferences().moveNext">
+          			<li data-bind="css: {disabled: filteredConferences.currentPage() == filteredConferences.pageCount()}">
+            			<a href="#" aria-label="Next" data-bind="click: filteredConferences.moveNext">
               				<span aria-hidden="true">&raquo;</span>
             			</a>
           			</li>
