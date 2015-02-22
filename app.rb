@@ -138,7 +138,7 @@ class MyApp < Sinatra::Base
 	end
 
 	post '/api/conference/new' do
-		"/conference#id=#{settings.db_conf.putConference(params[:conf])}"
+		"/conference#id/#{settings.db_conf.putConference(params[:conf])}"
 	end
 
 	get '/api/industry' do

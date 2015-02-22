@@ -26,7 +26,9 @@ function Conference(data) {
   self.tags = ko.observableArray(data.tags);
 
   self.tagsJoined = ko.computed(function() {
-    return self.tags().join(', ');
+    if(Array.isArray(self.tags()))
+        return self.tags().join(', ')
+    return self.tags();
   });
 
   self.time = ko.observable(new TimeFrame(data.time));
@@ -44,10 +46,6 @@ function TimeFrame(data) {
   self.start = ko.observable(data.start);
   self.end = ko.observable(data.end);
 }
-
-TimeFrame.prototype.toString = function () {
-  return this.start() + ' - ' + this.end();
-};
 
 /**
  *  Venue: {
@@ -72,6 +70,7 @@ function Venue(data) {
  *  }
  */
  function Location(data) {
+    console.log(data);
     var self = this;
     data = data || {};
 
@@ -87,14 +86,6 @@ function Venue(data) {
     self.line2 = ko.computed(function() {
       return self.city() + ", " + self.state();
     });
- }
-
- Location.prototype.toString = function() {
-    var self = this;
-    return self.address() + ' ' +
-        self.crossStreet() + ', ' +
-        self.city() + ', ' +
-        self.state();
  }
 
 /**
