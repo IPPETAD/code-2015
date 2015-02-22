@@ -124,7 +124,23 @@ function ConferenceViewModel() {
                 venues[i]['location']['lat'],
                 venues[i]['location']['lng']
             )
-            var marker = new L.marker(ll).bindPopup(venues[i]['name'])
+            var marker = new L.marker(ll, {title: venues[i]['name']})
+            var popup;
+            marker.on('mouseover', function(e) {
+                console.log(e)
+                popup = L.popup({offset: e.target.options.icon.options.popupAnchor})
+                    .setLatLng(this.getLatLng())
+                    .setContent(e.target.options.title)
+                    .openOn(window.mapVenues);
+            });
+            marker.on('click', function(e) {
+                for(var i = 0; i < self.venues().length; i++) {
+                    if(self.venues()[i]['name'] == e.target.options.title) {
+                        self.conf().venue(new Venue(self.venues()[i]));
+                        break;
+                    }
+                }
+            })
             markers.push(marker)
             window.mapVenues.addLayer(marker)
         }
