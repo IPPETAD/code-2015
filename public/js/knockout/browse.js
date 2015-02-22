@@ -31,12 +31,12 @@ function BrowseViewModel() {
               }
               return false;
             });
-        }).extend({paging: 10});
-    }, this);
+        })();
+    }, this).extend({paging: 10});
 
     self.buttons = ko.computed(function() {
         pages = [];
-        for(var i = 0; i < self.filteredConferences().pageCount(); i++) {
+        for(var i = 0; i < self.filteredConferences.pageCount(); i++) {
             pages.push(i+1);
         }
         return pages;
@@ -60,7 +60,7 @@ function BrowseViewModel() {
     }
 
     self.goToPage = function(page) {
-        self.filteredConferences().currentPage(page);
+      self.filteredConferences.currentPage(page);
     };
 
     $.get('/api/conference', function(data) {
