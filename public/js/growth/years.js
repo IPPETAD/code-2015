@@ -24,9 +24,14 @@ YearChart.prototype = {
 		});
 	},
 	updateChart: function(data) {
+	
+		var data2 = [{
+			key: "Values",
+			values: data
+		}];
 
 		d3.select(this.id) 
-			.datum(data)
+			.datum(data2)
 			.transition().duration(500)
 			.call(this.chart);
 	
