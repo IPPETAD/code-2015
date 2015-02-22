@@ -44,6 +44,19 @@ var city_to_gps = {
 function ConferenceViewModel() {
     var self = this;
     self.conf = ko.observable(new Conference());
+    self.tags = ko.computed({
+      read: function() {
+        if (self.conf() && self.conf().tags()) {
+          return self.conf().tags().join(' ');
+        } else {
+          return '';
+        }
+      },
+      write: function(value) {
+        self.conf().tags(value.split(' '));
+      }
+    });
+
     self.industries = ko.observableArray();
     self.industry = ko.observable();
     self.cities = ko.observableArray();

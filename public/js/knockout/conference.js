@@ -2,6 +2,18 @@ function ConferenceViewModel() {
   var self = this;
   self.conf = ko.observable(new Conference());
   self.editConf = ko.observable();
+  self.editTags = ko.computed({
+    read: function() {
+      if (self.editConf() && self.editConf().tags()) {
+        return self.editConf().tags().join(' ');
+      } else {
+        return '';
+      }
+    },
+    write: function(value) {
+      self.editConf().tags(value.split(' '));
+    }
+  });
 
   self.edit = function() {
     self.editConf(new Conference(ko.toJS(self.conf())));
