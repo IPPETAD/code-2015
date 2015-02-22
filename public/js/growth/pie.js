@@ -20,6 +20,8 @@ PieChart.prototype = {
 				.showLegend(false);
 
 			self.updateChart(data)
+ 			nv.utils.windowResize(function() { self.chart.update() });
+
 
             return self.chart;
         });
@@ -31,7 +33,7 @@ PieChart.prototype = {
             .datum(data)
             .transition().duration(1200)
 			.attr('width', this.width)
-			.attr('height', this.height-230)
+			.attr('height', this.height)
             .call(this.chart);
 
 		if (this.callback) this.onSliceClick(this.callback);

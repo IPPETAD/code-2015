@@ -56,13 +56,13 @@ timeLapse.onNodeClick(function(label) {
 });
 
 
-var pieChart = new PieChart(300,300);
+var pieChart = new PieChart(300,600);
 pieChart.drawChart("#pie_chart", tmpdata);
 pieChart.onSliceClick(function(label) {
 	vm.industry(label);
 });
 
-var yearChart = new YearChart(300);
+var yearChart = new YearChart(250);
 yearChart.drawChart("#year_chart", tmpdata);
 yearChart.onBarClick(function(label) {
 	vm.industry(label);
