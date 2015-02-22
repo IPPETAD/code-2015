@@ -1,6 +1,6 @@
 require 'mongo'
 
-client = Mongo::MongoClient.new('ippetad.cloudapp.net')
+client = Mongo::MongoClient.new('localhost')
 og = client.db('james')['employed']
 new = client.db('james')['hacky']
 
