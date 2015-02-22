@@ -133,7 +133,7 @@ class MyApp < Sinatra::Base
 	end
 
 	get '/conference/new' do
-		js :knockout, 'knockout/new_conference'
+		js :knockout, 'foursquare', 'knockout/new_conference', 'jquery.bootstrap.wizard'
 		erb :new_conference
 	end
 
@@ -148,5 +148,11 @@ class MyApp < Sinatra::Base
 		conf.to_json
 	end
 
+	get '/industries' do
+		content_type :json
+		settings.db_growth.getIndustryNames.delete_if do |e|
+			e == 'Total employed, all industries'
+		end.to_json
+	end
 
 end

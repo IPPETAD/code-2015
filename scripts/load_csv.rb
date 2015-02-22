@@ -15,7 +15,7 @@ CSV.read("data/02820124-eng.csv", :encoding => 'windows-1251:utf-8').each do |ro
 		'date' => date,
 		'location' => row[1],
 		'location_code' => row[2],
-		'industry' => row[3],
+		'industry' => row[3][0...-10],
 		'vector' => row[4],
 		'value' => row[6]
 	})
