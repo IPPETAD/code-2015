@@ -22,8 +22,6 @@ Conference planning and organizing. Redefined.
 * Database: [MongoDB](http://www.mongodb.org)
 * Back-end web: [Ruby](https://www.ruby-lang.org/en/) with modules including:
  * [Sinatra](http://www.sinatrarb.com/) web framework
- * [WTForms](http://wtforms.readthedocs.org) for form handling
- * [Babel](http://babel.pocoo.org) for localizations
 * Front-end web: 
  * [Bootstrap](http://getbootstrap.com) based CSS theme
  * [D3.js](http://d3js.org) for visualizations
