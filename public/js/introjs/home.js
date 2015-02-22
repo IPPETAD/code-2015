@@ -1,6 +1,6 @@
 $(".navbar").attr('data-step', 1);
 $(".navbar").attr('data-intro', 
-	  "<p>Hello, and welcome to á´stellation!</p>" 
+	  "<p>Hello, and welcome to Constellation!</p>" 
 	+ "<p>Our purpose is to make conference planning and joining a breeze using intuitive design and open government data.</p>"
 	+ "<p>If you close the tour, you can continue from the footer on any page. Let's get started!</p>" );
 
@@ -20,9 +20,9 @@ $(".growth").attr('data-intro',
 	+ "<p>Detailed growth analytics provide an easy way to inspect industries across Canada. This not only provides a simple and sleek way to visualize industry growth, but provides it in a manner that is actually useful - especially for those looking to host conferences or enter new business areas.</p>");
 
 
-$(".tour").attr("data-step", 5);
-$(".tour").attr("data-position", "top");
-$(".tour").attr('data-intro',
+$(".title").attr("data-step", 5);
+$(".title").attr("data-position", "top");
+$(".title").attr('data-intro',
 	  "<p>Alright, time to move on!</p>"
 	+ "<p>Press the button below continue, or end your tour here and look around on your own time!</p>");
 
