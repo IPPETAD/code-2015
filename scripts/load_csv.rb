@@ -3,7 +3,7 @@
 require 'mongo'
 require 'csv'
 
-conn = Mongo::MongoClient.new('ippetad.cloudapp.net')
+conn = Mongo::MongoClient.new('localhost')
 db = conn.db('james')
 coll = db['employed']
 

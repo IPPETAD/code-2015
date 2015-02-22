@@ -33,10 +33,18 @@ Conference planning and organizing. Redefined.
  
 ## How to Run
 
+Start with:
+* [Ruby](https://www.ruby-lang.org/)
+* [Bundler](http://bundler.io)
+* Running [MongoDB](https://www.mongodb.com)
+
 Download and run:
 	
 	git clone https://github.com/IPPETAD/code-2015
-	
 	cd code-2015
+	
+	unzip db/james.zip
+	mongorestore db/james
+	
 	bundle install					# To install sinatra
 	rvmsudo rackup					# To run portal
