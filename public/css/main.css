@@ -71,6 +71,10 @@ h2{
 #footer a{
   color: #777;
 }
+
+.introjs-tooltip{
+  color: #111;
+}
 /** COLLAPSABLE PANEL HEADINGS **/
 .toggle:hover {
     cursor: pointer;
