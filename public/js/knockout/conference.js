@@ -12,11 +12,13 @@ function ConferenceViewModel() {
   };
 
   self.submit = function() {
-    // POST STUFF
-
-    // ON SUCCESS:
-    // self.conf(new Conference(response));
-    self.editConf(null);
+    $.post('/api/conference/' + self.editConf()._id,
+      {
+        conf: ko.toJS(self.editConf())
+      }).done(function(data) {
+        self.conf(new Conference(ko.toJS(self.editConf())));
+        self.editConf(null);
+      });
   };
 
   self.confTemplateToUse = function() {
