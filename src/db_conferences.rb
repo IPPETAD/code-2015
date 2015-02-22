@@ -19,7 +19,7 @@ class ConferenceData
 		@confData.find({}, {
 			:skip => skip,
 			:limit => count,
-			:fields => ['_id', 'title', 'topic', 'description', 'image']
+			:fields => ['_id', 'title', 'topic', 'description', 'image', 'tags']
 		}).to_a
 	end
 

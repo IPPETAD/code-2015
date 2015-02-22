@@ -7,7 +7,7 @@ class MongoClientSingleton
   attr_reader :client
 
   def initialize
-    @client = Mongo::MongoClient.new('ippetad.cloudapp.net')
+    @client = Mongo::MongoClient.new('localhost')
   end
 
   def method_missing(method, *args)
