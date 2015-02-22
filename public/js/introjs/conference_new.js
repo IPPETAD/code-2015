@@ -1,11 +1,11 @@
-$("#wizard").attr('data-step', 1);
-$("#wizard").attr('data-intro',
+$(".wizard-header").attr('data-step', 1);
+$(".wizard-header").attr('data-intro',
       "<p>Yer a wizard, 'Arry!</p>");
 
 
 var startTour = function() {
 	introJs().setOption('doneLabel', 'Growth!').start().oncomplete(function() {
-        window.location.href = "growth?tour=true";
+        window.location.href = "/growth?tour=true";
     });
 };
 
