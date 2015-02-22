@@ -1,5 +1,5 @@
 /** CHARTS **/
-.nv-slice:hover, .tourfoot:hover, .nv-bar:hover, .nv-point:hover {
+.nv-slice:hover, .tourfoot:hover, .nv-bar:hover, .nv-point:hover, .filterbox:hover {
 	cursor: pointer !important;
 }
 svg text {
