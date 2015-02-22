@@ -67,7 +67,7 @@ class GrowthData
 	def getYears
 		result = []
 		@openData.aggregate([
-			{"$group" => {_id: {year: {"$year":"$date"}}}}
+			{"$group" => {_id: {year: {"$year" => "$date"}}}}
 		]).each do |entry|
 			result.push(entry["_id"]["year"])
 		end
