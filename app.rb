@@ -43,13 +43,13 @@ class MyApp < Sinatra::Base
 	end
 
 	get '/' do
-		js :home
+		js :home, :introjs, 'introjs/home'
 		erb :home
 	end
 
 	get '/browse' do
 		@title = "Browse Conferences"
-		js :knockout, 'knockout/browse'
+		js :knockout, 'knockout/browse', :introjs, 'introjs/browse'
 		erb :browse
 	end
 
@@ -59,7 +59,8 @@ class MyApp < Sinatra::Base
 	end
 
 	get '/growth' do
-		js :knockout, :nvd3, 'growth/pie', 'growth/years', 'growth/timelapse', 'knockout/growth'
+		js :knockout, :nvd3, 'growth/pie', 'growth/years', 'growth/timelapse', 'knockout/growth', :introjs, 'introjs/growth'
+
 		erb :growth
 	end
 
@@ -114,8 +115,8 @@ class MyApp < Sinatra::Base
 	end
 
 	get '/conference/new' do
-		js :knockout, 'foursquare', 'knockout/new_conference', :leaflet,
-			'jquery.bootstrap.wizard'
+		js :knockout, 'foursquare', 'knockout/new_conference', 'jquery.bootstrap.wizard', :introjs, 'introjs/conference_new', :leaflet
+
 		erb :new_conference
 	end
 
@@ -123,11 +124,10 @@ class MyApp < Sinatra::Base
 
 	get '/api/conference' do
 		content_type :json
-		page_count = (settings.db_conf.countConferences() / 10)
-		page = [(params[:page] || 1).to_i, 1].min
-		params[:q] ?
-			settings.db_conf.searchConferences(params[:q]).to_json :
-			settings.db_conf.getConferences(0, 0).to_json
+		settings.db_conf.getConferences(0, 0).map do |item|
+			item['_id'] = item['_id'].to_s
+			item
+		end.to_json
 	end
 
 	get '/api/conference/:id' do

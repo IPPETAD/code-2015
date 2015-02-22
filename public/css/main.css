@@ -21,7 +21,7 @@ svg text {
 
 body{
   background: #112;
-  color: #ccc;
+  color: #ddd;
 }
 
 .navbar{
@@ -70,6 +70,10 @@ h2{
 }
 #footer a{
   color: #777;
+}
+
+.introjs-tooltip{
+  color: #111;
 }
 /** COLLAPSABLE PANEL HEADINGS **/
 .toggle:hover {

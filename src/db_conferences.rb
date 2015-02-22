@@ -18,7 +18,8 @@ class ConferenceData
 	def getConferences(count, skip)
 		@confData.find({}, {
 			:skip => skip,
-			:limit => count
+			:limit => count,
+			:fields => ['_id', 'title', 'topic', 'description', 'image']
 		}).to_a
 	end
 
