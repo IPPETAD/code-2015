@@ -17,9 +17,9 @@ class GrowthData
 
 	def getSpecific(industry, year, location)
 		@openData.find_one({
-			"industry": industry,
-			"date": {"$lt": Time.new(year.to_i+1), "$gte": Time.new(year.to_i)},
-			"location": location,
+			"industry" => industry,
+			"date" => {"$lt" => Time.new(year.to_i+1), "$gte" => Time.new(year.to_i)},
+			"location" => location,
 		})
 		#{:sort => {"date":-1}})
 	end
