@@ -31,7 +31,6 @@ TimeLapse.prototype = {
 	},
 
 	updateChart: function(data) {
-		console.log(data);
 		
 		d3.select(this.id)
 			.datum(data)
