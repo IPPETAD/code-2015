@@ -62,8 +62,16 @@ function ConferenceViewModel() {
     var circles = {}
     var markers = []
 
-    window.mapIndustry = L.map('map-industry').setView([45.4000, -75.6667], 4);
-    window.mapVenues = L.map('map-venues').setView([45.4000, -75.6667], 4);
+    window.mapIndustry = L.map('map-industry').setView([55, -97], 4);
+    window.mapVenues = L.map('map-venues').setView([55, -97], 4);
+    var industryTiles = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        maxZoom: 18
+    }).addTo(window.mapIndustry)
+    var venueTiles = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        maxZoom: 18
+    }).addTo(window.mapVenues);
     self.industry.subscribe(function(value) {
         $.post('/api/industry/max', {industry: value}, self.cities)
     });
@@ -96,6 +104,7 @@ function ConferenceViewModel() {
 
     self.city.subscribe(function(value) {
         window.mapVenues.setView(city_to_gps[value], 10)
+        venueTiles.redraw()
         fourSquare(value, 'convention', function(data) {
             console.log(data['response']['venues']);
             self.venues(data['response']['venues']);
@@ -137,14 +146,7 @@ function ConferenceViewModel() {
         self.industries(data);
     })
 
-    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-        maxZoom: 18
-    }).addTo(window.mapIndustry)
-    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-        maxZoom: 18
-    }).addTo(window.mapVenues);
+
 }
 
 $(function() {
