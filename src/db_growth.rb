@@ -31,7 +31,7 @@ class GrowthData
 		getIndustryNames().each do |industry|
 			result.push(getSpecific(industry, year, location))
 		end
-		result.each_index{|i| result[i]['date'] = result[i]['date'].to_i*1000}
+		result.compact!.each_index{|i| result[i]['date'] = result[i]['date'].to_i*1000}
 		return result
 	end
 
@@ -40,7 +40,7 @@ class GrowthData
 		getLocationNames().each do |location|
 			result.push(getSpecific(industry, year, location))
 		end
-		result.each_index{|i| result[i]['date'] = result[i]['date'].to_i*1000}
+		result.compact!.each_index{|i| result[i]['date'] = result[i]['date'].to_i*1000}
 		return result
 	end
 
@@ -49,7 +49,7 @@ class GrowthData
 		getYears().each do |year|
 			result.push(getSpecific(industry, year, location))
 		end
- 		result.each_index{|i| result[i]['date'] = result[i]['date'].to_i*1000}
+ 		result.compact!.each_index{|i| result[i]['date'] = result[i]['date'].to_i*1000}
 		return result
 	end
 
