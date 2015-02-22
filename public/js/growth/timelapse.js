@@ -23,8 +23,6 @@ TimeLapse.prototype = {
 			self.chart.yAxis
 				.axisLabel('Total workers');
 
-//			self.chart.forceY(0);
-
 			self.updateChart(data);
 			nv.utils.windowResize(function() { self.chart.update() });
 		
@@ -33,6 +31,7 @@ TimeLapse.prototype = {
 	},
 
 	updateChart: function(data) {
+		console.log(data);
 		
 		d3.select(this.id)
 			.datum(data)

@@ -45,7 +45,7 @@ var tmpdata =  [
 var timedata = [
 	{
 		values: [],
-		key: 'Years',
+		key: 'Employed (x1000)',
 		color: "#ff7f0e"
 	}];
 
@@ -93,13 +93,13 @@ vm.industry.subscribe(function(newValue) {
 			var data = [];
 			$.each(JSON.parse(result), function(i,d) {
 				data.push({
-					x: d.date,
+					x: d.date+(new Date()).getTimezoneOffset()*60000,
 					y: parseInt(d.value)
 				})
             });
 			timeLapse.updateChart([{
 				values: data,
-				key: 'Years',
+				key: 'Employed (x1000)',
 				color: '#ff7f0e'
 			}]);
 		});	
