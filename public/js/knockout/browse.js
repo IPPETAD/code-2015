@@ -84,3 +84,22 @@ function splitFilter(filter) {
       return item;
   });
 }
+
+function setFilterPartial(partial, filter) {
+  var partials = partial.split('&');
+  partials.forEach(function(part) {
+    var index = filter.indexOf(part.split('=')[0] + '=');
+    if (index > -1) {
+      var temp = filter.slice(index, filter.length);
+      var index2 = temp.indexOf('&');
+      if (index2 > -1) {
+        temp = temp.slice(0, index2);
+      }
+      filter = filter.replace(temp, part);
+    } else {
+      filter = filter + part;
+    }
+  });
+
+  return filter;
+}
