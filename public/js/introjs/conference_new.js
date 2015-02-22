@@ -4,7 +4,7 @@ introJs().onchange(function(el) {
 $(".wizard-header").attr('data-step', 1);
 $(".wizard-header").attr('data-intro',
       "<p>This wizard helps you plan your conferences and events.</p>"
-    + "<p>We'll help you target a Canadian industry, find the best city to host your event, find a suitable venue, and make the best gosh darn conference you've ever thrown.</p>"
+    + "<p>We'll help you target a Canadian industry, find the best city to host your event, find a suitable venue, and make the best conference you've ever thrown.</p>"
     + "<p>Let's get started.</p>");
 
 $(".industry_body").attr('data-step', 2);
