@@ -24,7 +24,7 @@ var prov_to_city = {
     'Quebec': 'Quebec City, QC',
     'Nova Scotia': 'Halifax, NS',
     'Newfoundland and Labrador': "St. John's, NL",
-    'Prince Edward Island': 'Charlottetown, PEI',
+    'Prince Edward Island': 'Charlottetown, PE',
     'New Brunswick': 'Fredericton, NB'
 }
 
@@ -36,8 +36,8 @@ var city_to_gps = {
     'Toronto, ON': prov_to_gps['Ontario'],
     'Quebec City, QC': prov_to_gps['Quebec'],
     'Halifax, NS': prov_to_gps['Nova Scotia'],
-    'Newfoundland and Labrador': "St. John's, NL",
-    'Charlottetown, PEI': prov_to_gps['Prince Edward Island'],
+    "St. John's, NL": prov_to_gps['Newfoundland and Labrador'],
+    'Charlottetown, PE': prov_to_gps['Prince Edward Island'],
     'Fredericton, NB': prov_to_gps['New Brunswick']
 }
 

@@ -8,6 +8,7 @@ $("#search").attr('data-intro',
 	+ "<p>From here you can put in relevant terms and our custom algorithm will match events with similar descriptions and titles. Try searching 'hackathon' later and see what comes up!</p>");
 
 $(".filters").attr('data-step', 3);
+$(".filters").attr('data-position', 'right');
 $(".filters").attr('data-intro',
 	  "<p>These filters provide additional support by distinguishing the different industries available. From here, you can find the conferences that match your business goals and interests.</p>"
 	+ "<p>The industries listed match open data resources, demonstrating the complete integration of this system.</p>");
