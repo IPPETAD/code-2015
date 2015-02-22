@@ -49,12 +49,12 @@ function ConferenceViewModel() {
     ]
   }));
 
-  self.venueTemplateToUse = function(venue) {
-    return venue ? "venue-template" : "no-venue-template";
+  self.venueTemplateToUse = function() {
+    return self.conf().venue().name() ? "venue-template" : "no-venue-template";
   };
 
-  self.dateTemplateToUse = function(timeFrame) {
-    return timeFrame ? "date-template" : "no-date-template";
+  self.dateTemplateToUse = function() {
+    return self.conf().time().start() ? "date-template" : "no-date-template";
   };
 
   Sammy(function() {
