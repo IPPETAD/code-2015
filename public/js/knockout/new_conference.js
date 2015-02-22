@@ -166,7 +166,6 @@ function ConferenceViewModel() {
 
     self.save = function() {
         var con = ko.toJS(self.conf)
-        con.tags = con.tags.split(' ') || []
         $.post('/api/conference/new', {
             conf: con
         }, function(data) {
