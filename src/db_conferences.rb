@@ -27,4 +27,8 @@ class ConferenceData
 		end
 	end
 
+	def putConference(conf)
+		@confData.insert(conf)
+	end
+
 end

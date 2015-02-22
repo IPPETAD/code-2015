@@ -1,0 +1,38 @@
+<div class="form-group">
+    <label for="title">Title</label>
+    <input class="form-control" data-bind="value: conf().title"></input>
+</div>
+<div class="form-group">
+    <label for="topic">Topic</label>
+    <input class="form-control" data-bind="value: conf().topic"></input>
+</div>
+<div class="form-group">
+    <label for="description">Description</label>
+    <textarea class="form-control" data-bind="value: conf().description"></textarea>
+</div>
+<div class="form-group">
+    <label for="body">Body</label>
+    <textarea class="form-control" data-bind="value: conf().body"></textarea>
+</div>
+<div class="form-group">
+    <label for="image">Image URL</label>
+    <input class="form-control" data-bind="value: conf().image"></input>
+</div>
+<div class="form-group">
+    <label for="tags">Tags</label>
+    <input class="form-control" class="form-control" data-bind="value: conf().tags"></input>
+</div>
+<div class="form-group">
+    <label for="time">Time</label>
+    <input class="form-control" data-bind="value: conf().time"></input>
+</div>
+<div class="form-group">
+    <label for="venue">Venue</label>
+    <input class="form-control" data-bind="value: conf().venue"></input>
+</div>
+<div class="form-group">
+    <label for="itinerary">Itinerary</label>
+    <input class="form-control" data-bind="value: conf().itinerary"></input>
+</div>
+
+<button class="btn btn-default" data-bind="click: save">Submit</button>
