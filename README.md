@@ -43,10 +43,10 @@ Download and run:
 	git clone https://github.com/IPPETAD/code-2015
 	cd code-2015
 	
-	unzip db/james.zip
-	mongorestore db/james
+	unzip db/james.zip        # Extract database dump
+	mongorestore db/james     # Import database
 	
-	bundle install					# To install sinatra
-	rvmsudo rackup					# To run portal
+	bundle install            # To install sinatra
+	rackup                    # To run 
 
 Boom. Visit [localhost:8080](http://localhost:8080/).
