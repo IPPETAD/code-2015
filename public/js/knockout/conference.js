@@ -59,7 +59,6 @@ function ConferenceViewModel() {
 
   Sammy(function() {
     this.get('#:id', function() {
-      console.log('id: ' + this.params.id);
       $.getJSON('/conference/' + this.params.id, function(data) {
         self.conf(new Conference(data));
       });
