@@ -9,6 +9,7 @@ group :development do
 	gem 'sinatra-contrib', require: 'sinatra/reloader'
 end
 
-group :linux do
+group :production do
 	gem 'bson_ext'
+	gem 'unicorn'
 end
