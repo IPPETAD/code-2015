@@ -29,15 +29,10 @@
   </div>
 </div>
 
-<div class="panel panel-default">
-    <div class="panel-body" data-bind="html: conf().body">
-    </div>
+<div class="panel panel-default" data-bind="template: { name: bodyTemplateToUse }">
 </div>
 
-<div class="panel panel-default">
-  <ul class="list-group" data-bind="foreach: conf().itinerary">
-    <li class="list-group-item"><span data-bind="text: time"></span>: <span data-bind="text: title"></span></li>
-  </ul>
+<div class="panel panel-default" data-bind="template: { name: itineraryTemplateToUse }">
 </div>
 
 <script type="text/html" id="venue-template">
@@ -58,4 +53,23 @@
 
 <script type="text/html" id="no-date-template">
   <p>No date set yet.</p>
+</script>
+
+<script type="text/html" id="body-template">
+  <div class="panel-body" data-bind="html: conf().body">
+  </div>
+</script>
+
+<script type="text/html" id="no-body-template">
+  <div class="panel-body">No body content set yet.</div>
+</script>
+
+<script type="text/html" id="itinerary-template">
+  <ul class="list-group" data-bind="foreach: conf().itinerary">
+    <li class="list-group-item"><span data-bind="text: time"></span>: <span data-bind="text: title"></span></li>
+  </ul>
+</script>
+
+<script type="text/html" id="no-itinerary-template">
+  <div class="panel-body">No itinerary set yet.</div>
 </script>

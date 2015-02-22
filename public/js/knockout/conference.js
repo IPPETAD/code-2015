@@ -57,6 +57,14 @@ function ConferenceViewModel() {
     return self.conf().time().start() ? "date-template" : "no-date-template";
   };
 
+  self.bodyTemplateToUse = function() {
+    return self.conf().body() ? "body-template" : "no-body-template";
+  };
+
+  self.itineraryTemplateToUse = function() {
+    return self.conf().itinerary().length > 0 ? "itinerary-template" : "no-itinerary-template";
+  };
+
   Sammy(function() {
     this.get('#:id', function() {
       $.getJSON('/conference/' + this.params.id, function(data) {
