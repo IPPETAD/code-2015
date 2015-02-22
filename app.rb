@@ -68,7 +68,7 @@ class MyApp < Sinatra::Base
 	end
 
 	get '/growth' do
-		js :nvd3, 'growth/pie', 'growth/years', 'growth/ui'
+		js :knockout, :nvd3, 'growth/pie', 'growth/years', 'growth/timelapse', 'knockout/growth'
 		erb :growth
 	end
 

@@ -5,6 +5,9 @@
 .nv-bar:hover {
     cursor: pointer !important;
 }
+.nv-point:hover {
+	cursor: pointer !important;
+}
 svg text {
     fill: white !important;
 }
