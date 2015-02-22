@@ -17,7 +17,36 @@ function ConferenceViewModel() {
     time: {
       start: 'Sometime',
       end: 'Whenever'
-    }
+    },
+    description: 'Discussing the need for a conference kickstarter.',
+    tags: ['Hackathon', 'CODE 2015', 'Pls halp'],
+    body: '<h1>Header</h1><p>Paragraph</p>',
+    itinerary: [
+      {
+        title: 'Intro',
+        time: { start: '11:00 am', end: '11:30 am' }
+      },
+      {
+        title: 'Speaker 1',
+        time: { start: '11:30 am', end: '12:00 pm' }
+      },
+      {
+        title: 'Lunch',
+        time: { start: '12:00 pm', end: '12:30 pm' }
+      },
+      {
+        title: 'Speaker 2',
+        time: { start: '12:30 pm', end: '1:00 pm' }
+      },
+      {
+        title: 'Speaker 3',
+        time: { start: '1:00 pm', end: '1:30 pm' }
+      },
+      {
+        title: 'End Mingling',
+        time: { start: '1:30 pm', end: '2:00 pm' }
+      }
+    ]
   }));
 
   self.venueTemplateToUse = function(venue) {
