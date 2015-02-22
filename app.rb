@@ -49,17 +49,8 @@ class MyApp < Sinatra::Base
 
 	get '/browse' do
 		@title = "Browse Conferences"
-		page = [(params[:page] || 1).to_i, 1].min
-		filters = params[:filter]
-
-		page_count = (settings.db_conf.countConferences() / 10)
 		js :knockout, 'knockout/browse'
-		erb :browse, :locals => {
-			:params => params,
-			:filter => filters,
-			:page => page,
-			:page_count => page_count+1,
-		}
+		erb :browse
 	end
 
 	get '/venues' do
@@ -75,15 +66,6 @@ class MyApp < Sinatra::Base
 	post '/growth/yearly' do
 		puts params
 		return settings.db_growth.get(params["industry"],params["year"],params["location"]).to_json
-	end
-
-	get '/conferences' do
-		content_type :json
-		page_count = (settings.db_conf.countConferences() / 10)
-		page = [(params[:page] || 1).to_i, 1].min
-		params[:q] ?
-			settings.db_conf.searchConferences(params[:q]).to_json :
-			settings.db_conf.getConferences(0, 0).to_json
 	end
 
 	#### AUTHENTICATION ####
@@ -137,18 +119,29 @@ class MyApp < Sinatra::Base
 		erb :new_conference
 	end
 
-	post '/conference/new' do
-		"/conference##{settings.db_conf.putConference(params[:conf])}"
+	#### JSON API ####
+
+	get '/api/conference' do
+		content_type :json
+		page_count = (settings.db_conf.countConferences() / 10)
+		page = [(params[:page] || 1).to_i, 1].min
+		params[:q] ?
+			settings.db_conf.searchConferences(params[:q]).to_json :
+			settings.db_conf.getConferences(0, 0).to_json
 	end
 
-	get '/conference/:id' do
+	get '/api/conference/:id' do
 		content_type :json
 		conf = settings.db_conf.getConference(params[:id])
 		conf['_id'] = conf['_id'].to_s
 		conf.to_json
 	end
 
-	get '/industries' do
+	post '/api/conference/new' do
+		"/conference##{settings.db_conf.putConference(params[:conf])}"
+	end
+
+	get '/api/industry' do
 		content_type :json
 		settings.db_growth.getIndustryNames.delete_if do |e|
 			e == 'Total employed, all industries'

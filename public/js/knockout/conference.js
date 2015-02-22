@@ -24,7 +24,7 @@ function ConferenceViewModel() {
         self.conf(getTestConference());
       } else {
         $.ajax({
-            url: '/conference/' + this.params.id,
+            url: '/api/conference/' + this.params.id,
             type: 'GET'
         }).done(function(data) {
           self.conf(new Conference(data));
@@ -34,7 +34,7 @@ function ConferenceViewModel() {
       }
     });
 
-    this.get('', function() { this.app.runRoute('get', '#default') });
+    this.get('/conference', function() { this.app.runRoute('get', '#default') });
   }).run();
 
 }

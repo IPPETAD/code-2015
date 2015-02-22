@@ -22,14 +22,14 @@ function ConferenceViewModel() {
     self.save = function() {
         var con = ko.toJSON(self.conf)
         con.tags = con.tags.split(' ') || []
-        $.post('/conference/new', {
+        $.post('/api/conference/new', {
             conf: con
         }, function(data) {
             window.location.replace(data);
         })
     }
 
-    $.get('/industries', function(data) {
+    $.get('/api/industry', function(data) {
         console.log(data);
         self.industries(data);
     })
