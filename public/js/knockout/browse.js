@@ -42,9 +42,18 @@ function BrowseViewModel() {
         return pages;
     });
 
+    self.filterCheckBoxes = ko.observableArray([]);
+    self.filterCheckBoxes.subscribe(function (values) {
+
+    });
+
+    self.setFilterPartial = function(partial) {
+      self.filter(replaceFilterPartial(partial, self.filter()));
+    };
+
     self.goToPage = function(page) {
         self.filteredConferences().currentPage(page);
-    }
+    };
 
     $.get('/api/conference', function(data) {
         self.conferences(data.map(function(conference) {
@@ -53,11 +62,16 @@ function BrowseViewModel() {
     });
 
     self.filter.subscribe(function(filter) {
-      window.location.hash = encodeURI(filter);
+      if (filter && filter.length >= 3) {
+        window.location.hash = 'filter/' + encodeURI(filter);
+      } else {
+        window.location.hash = '';
+      }
+
     });
 
     Sammy(function() {
-      this.get('#:filter', function() {
+      this.get('#filter/:filter', function() {
         self.filter(this.params.filter);
       });
     }).run();
@@ -85,7 +99,7 @@ function splitFilter(filter) {
   });
 }
 
-function setFilterPartial(partial, filter) {
+function replaceFilterPartial(partial, filter) {
   var partials = partial.split('&');
   partials.forEach(function(part) {
     var index = filter.indexOf(part.split('=')[0] + '=');
