@@ -34,7 +34,6 @@ TimeLapse.prototype = {
 
 	updateChart: function(data) {
 		
-		console.log(data);
 		d3.select(this.id)
 			.datum(data)
 			.call(this.chart);
@@ -48,7 +47,7 @@ TimeLapse.prototype = {
 		/* NODE CLICK */
 		d3.selectAll('.nv-point')
 			.on('click', function(d) {
-				callback(d);
+				callback(d.x);
 			});
 	}
 }

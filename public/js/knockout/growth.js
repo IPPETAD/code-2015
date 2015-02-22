@@ -2,7 +2,7 @@ function GrowthViewModel() {
 	var self = this;
 
 	self.location = ko.observable("Canada");
-	self.industry = ko.observable();
+	self.industry = ko.observable("Total employed, all industries");
 	self.year = ko.observable(2015);
 	
 	self.pieTitle = ko.computed(function() {
@@ -44,29 +44,28 @@ var tmpdata =  [
 
 var timedata = [
 	{
-		values: [{ x: 1424571789874, y: 17000},
-				 { x: 1424658189874, y: 16000}],
+		values: [],
 		key: 'Years',
 		color: "#ff7f0e"
 	}];
 
-var timeLapse = new TimeLapse(300,500);
+var timeLapse = new TimeLapse(300,600);
 timeLapse.drawChart("#time_lapse", timedata);
 timeLapse.onNodeClick(function(label) {
-	console.log(label);
+	vm.year(new Date(label).getUTCFullYear());
 });
 
 
 var pieChart = new PieChart(300,300);
 pieChart.drawChart("#pie_chart", tmpdata);
 pieChart.onSliceClick(function(label) {
-    console.log(label);
+	vm.industry(label);
 });
 
 var yearChart = new YearChart(300);
 yearChart.drawChart("#year_chart", tmpdata);
 yearChart.onBarClick(function(label) {
-    console.log(label);
+	vm.industry(label);
 });
 
 var carl = null;
@@ -83,6 +82,7 @@ vm.year.subscribe(function(newValue) {
                 	});
         	});
 			pieChart.updateChart(data);
+			yearChart.updateChart(data);
 		});
 });
 
@@ -105,4 +105,5 @@ vm.industry.subscribe(function(newValue) {
 		});	
 });
 
-vm.industry("Total employed, all industries");
+vm.industry.valueHasMutated();
+vm.year.valueHasMutated();
