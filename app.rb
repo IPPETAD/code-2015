@@ -3,6 +3,7 @@ require 'bundler'
 require './sinatra/javascript'
 require './src/db_user'
 require './src/db_conferences'
+require './src/db_growth'
 Bundler.require(:default)
 Bundler.require(:development)
 
@@ -14,6 +15,7 @@ class MyApp < Sinatra::Base
 		register Sinatra::Reloader if development?
 		set :db_user, UserData.new
 		set :db_conf, ConferenceData.new
+		set :db_growth, GrowthData.new
 	end
 
 	helpers do
@@ -70,8 +72,13 @@ class MyApp < Sinatra::Base
 	end
 
 	get '/growth' do
-		js :d3, :nvd3, 'growth/ui'
+		js :nvd3, 'growth/pie', 'growth/years', 'growth/ui'
 		erb :growth
+	end
+
+	post '/growth/yearly' do
+		puts params
+		return settings.db_growth.get(params["industry"],params["year"],params["location"]).to_json
 	end
 
 	#### AUTHENTICATION ####
