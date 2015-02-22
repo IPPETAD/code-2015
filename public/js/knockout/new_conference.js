@@ -30,7 +30,7 @@ function ConferenceViewModel() {
     }
 
     $.get('/api/industry', function(data) {
-        console.log(data);
+        data.unshift(' ');
         self.industries(data);
     })
 }
