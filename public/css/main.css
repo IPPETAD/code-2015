@@ -150,3 +150,8 @@ h2{
 .form-create p {
   margin: 0px;
 }
+
+/** MAP STUFF **/
+#map-industry {
+	height: 500px;
+}

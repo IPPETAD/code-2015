@@ -27,8 +27,9 @@ module Sinatra
           '//cdnjs.cloudflare.com/ajax/libs/sammy.js/0.7.6/sammy.min.js',
           '/js/knockout/extensions.js',
           '/js/knockout/models.js']
-		when :nvd3 then ['/vendor/nvd3/d3.v3.js', '/vendor/nvd3/nv.d3.js']
-		when :introjs then ['/vendor/introjs/intro.min.js']
+		    when :nvd3 then ['/vendor/nvd3/d3.v3.js', '/vendor/nvd3/nv.d3.js']
+        when :leaflet then ['//cdn.leafletjs.com/leaflet-0.7.3/leaflet.js']
+        when :introjs then ['/vendor/introjs/intro.min.js']
         else ['/js/' + script.to_s + '.js']
         end
       end

@@ -5,13 +5,13 @@ require './src/db_user'
 require './src/db_conferences'
 require './src/db_growth'
 Bundler.require(:default)
-Bundler.require(:development)
 
 class MyApp < Sinatra::Base
 	helpers Sinatra::JavaScripts
 
 	configure do
 		enable :sessions
+		Bundler.require(:development) if development?
 		register Sinatra::Reloader if development?
 		set :db_user, UserData.new
 		set :db_conf, ConferenceData.new
@@ -115,7 +115,7 @@ class MyApp < Sinatra::Base
 	end
 
 	get '/conference/new' do
-		js :knockout, 'foursquare', 'knockout/new_conference', 'jquery.bootstrap.wizard', :introjs, 'introjs/conference_new'
+		js :knockout, 'foursquare', 'knockout/new_conference', 'jquery.bootstrap.wizard', :introjs, 'introjs/conference_new', :leaflet
 
 		erb :new_conference
 	end
@@ -138,7 +138,7 @@ class MyApp < Sinatra::Base
 	end
 
 	post '/api/conference/new' do
-		"/conference##{settings.db_conf.putConference(params[:conf])}"
+		"/conference#id=#{settings.db_conf.putConference(params[:conf])}"
 	end
 
 	get '/api/industry' do
@@ -146,6 +146,11 @@ class MyApp < Sinatra::Base
 		settings.db_growth.getIndustryNames.delete_if do |e|
 			e == 'Total employed, all industries'
 		end.to_json
+	end
+
+	post '/api/industry/max' do
+		content_type :json
+		settings.db_growth.getIndustryMax(params[:industry]).to_json
 	end
 
 end
