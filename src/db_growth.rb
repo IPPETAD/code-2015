@@ -11,7 +11,9 @@ class GrowthData
     end
 
 	def get(industry, year, location)
-		return getAllIndustry(year, location) if industry.nil?
+		return getAllIndustries(year, location) if industry.nil?
+		return getAllLocations(industry, year) if location.nil?
+		return getYearData(industry, location) if year.nil?
 		return getSpecific(industry, year, location);
 	end
 
@@ -24,11 +26,30 @@ class GrowthData
 		#{:sort => {"date":-1}})
 	end
 
-	def getAllIndustry(year, location)
+	def getAllIndustries(year, location)
 		result = []
 		getIndustryNames().each do |industry|
 			result.push(getSpecific(industry, year, location))
 		end
+		result.each_index{|i| result[i]['date'] = result[i]['date'].to_i*1000}
+		return result
+	end
+
+	def getAllLocations(industry, year)
+		result = []
+		getLocationNames().each do |location|
+			result.push(getSpecific(industry, year, location))
+		end
+		result.each_index{|i| result[i]['date'] = result[i]['date'].to_i*1000}
+		return result
+	end
+
+	def getYearData(industry, location)
+		result = []
+		getYears().each do |year|
+			result.push(getSpecific(industry, year, location))
+		end
+ 		result.each_index{|i| result[i]['date'] = result[i]['date'].to_i*1000}
 		return result
 	end
 
@@ -38,6 +59,16 @@ class GrowthData
 
 	def getLocationNames
 		@openData.distinct("location")
+	end
+
+	def getYears
+		result = []
+		@openData.aggregate([
+			{"$group" => {_id: {year: {"$year":"$date"}}}}
+		]).each do |entry|
+			result.push(entry["_id"]["year"])
+		end
+		return result
 	end
 
 end

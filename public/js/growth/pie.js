@@ -53,7 +53,6 @@ PieChart.prototype = {
 				callback(d.label);
             })
             .on('dblclick', function() {});
-
 	}
 
 };

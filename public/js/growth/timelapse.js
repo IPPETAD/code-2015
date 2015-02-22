@@ -19,10 +19,11 @@ TimeLapse.prototype = {
 			self.chart.xAxis
 				.axisLabel('Year')
 				.tickFormat(function(d) { return d3.time.format('%Y')(new Date(d));});
+
 			self.chart.yAxis
 				.axisLabel('Total workers');
 
-			self.chart.forceY(0);
+//			self.chart.forceY(0);
 
 			self.updateChart(data);
 			nv.utils.windowResize(function() { self.chart.update() });
@@ -33,9 +34,22 @@ TimeLapse.prototype = {
 
 	updateChart: function(data) {
 		
+		console.log(data);
 		d3.select(this.id)
 			.datum(data)
 			.call(this.chart);
+
+		if (this.callback) this.onNodeClick(this.callback);
+	},
+
+	onNodeClick: function(callback) {
+		this.callback = callback;
+
+		/* NODE CLICK */
+		d3.selectAll('.nv-point')
+			.on('click', function(d) {
+				callback(d);
+			});
 	}
 }
 		

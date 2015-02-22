@@ -72,9 +72,11 @@ class MyApp < Sinatra::Base
 		erb :growth
 	end
 
-	post '/growth/yearly' do
-		puts params
-		return settings.db_growth.get(params["industry"],params["year"],params["location"]).to_json
+	post '/growth' do
+		puts params	
+		puts params["industry"].nil?
+		puts params["year"]
+		return settings.db_growth.get(params["industry"],params["year"],params["location"]).sort{|x,y| x["date"] <=> y["date"]}.to_json
 	end
 
 	get '/conferences' do
