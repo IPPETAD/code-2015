@@ -5,13 +5,13 @@ require './src/db_user'
 require './src/db_conferences'
 require './src/db_growth'
 Bundler.require(:default)
-Bundler.require(:development)
 
 class MyApp < Sinatra::Base
 	helpers Sinatra::JavaScripts
 
 	configure do
 		enable :sessions
+		Bundler.require(:development) if development?
 		register Sinatra::Reloader if development?
 		set :db_user, UserData.new
 		set :db_conf, ConferenceData.new
@@ -114,7 +114,8 @@ class MyApp < Sinatra::Base
 	end
 
 	get '/conference/new' do
-		js :knockout, 'foursquare', 'knockout/new_conference', 'jquery.bootstrap.wizard'
+		js :knockout, 'foursquare', 'knockout/new_conference', :leaflet,
+			'jquery.bootstrap.wizard'
 		erb :new_conference
 	end
 

@@ -1,6 +1,32 @@
 searchVisible = 0;
 transparent = true;
 
+city_to_gps = {
+    'Alberta': [53.544, -113.4909],
+    'British Columbia': [48.4222, -123.3657],
+    'Saskatchewan': [50.4547, -104.6067],
+    'Manitoba': [49.8994, -97.1392],
+    'Ontario': [43.700, -79.400],
+    'Quebec': [46.8167, -71.2167],
+    'Nova Scotia': [44.649050, -63.575794],
+    'Newfoundland and Labrador': [47.5675, -52.7072],
+    'Prince Edward Island': [46.2400, -63.1399],
+    'New Brunswick': [45.9500, -67.6667]
+}
+
+prov_to_city = {
+    'Alberta': 'Edmonton, AB',
+    'British Columbia': 'Victoria, BC',
+    'Saskatchewan': 'Regina, SK',
+    'Manitoba': 'Winnipeg, MB',
+    'Ontario': 'Toronto, ON',
+    'Quebec': 'Quebec City, QC',
+    'Nova Scotia': 'Halifax, NS',
+    'Newfoundland and Labrador': "St. John's, NL",
+    'Prince Edward Island': 'Charlottetown, PEI',
+    'New Brunswick': 'Fredericton, NB'
+}
+
 function ConferenceViewModel() {
     var self = this;
     self.conf = ko.observable(new Conference());
@@ -11,9 +37,37 @@ function ConferenceViewModel() {
     self.venues = ko.observableArray();
     self.hotels = ko.observableArray();
 
+    var map = L.map('map-industry').setView([45.4000, -75.6667], 4);
     self.industry.subscribe(function(value) {
         $.post('/api/industry/max', {industry: value}, self.cities)
-    })
+    });
+
+    self.cities.subscribe(function(cities) {
+        provinces = cities.filter(function(data) {
+            return data._id.indexOf(',') == -1 && data._id != 'Canada'
+        })
+        provinces.sort(function(a, b) {
+            return parseFloat(b['value']) - parseFloat(a['value'])
+        })
+        console.log(provinces)
+        for(i in map._layers) {
+            if(map._layers._path != undefined) {
+                try {
+                map.removeLayer(map._layers[i]);
+                }
+                catch(e) {
+                    console.log("problem with " + e + map._layers[i]);
+                }
+            }
+        }
+        console.log(prov_to_city[provinces[0]['_id']])
+        self.city(prov_to_city[provinces[0]['_id']]);
+        for(var i = 0; i < provinces.length; i++) {
+            L.circle(city_to_gps[provinces[i]._id], parseInt(provinces[i].value) * 500, {
+                color: 'blue'
+            }).addTo(map);
+        }
+    });
 
     self.city.subscribe(function(value) {
         fourSquare(value, 'convention', function(data) {
@@ -38,12 +92,16 @@ function ConferenceViewModel() {
         data.unshift(' ');
         self.industries(data);
     })
+
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        maxZoom: 18
+    }).addTo(map);
 }
 
 $(function() {
     ko.applyBindings(new ConferenceViewModel())
     $('[rel="tooltip"]').tooltip();
-
 
     $('#wizard').bootstrapWizard({
         'tabClass': 'nav nav-pills',
