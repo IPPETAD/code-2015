@@ -45,6 +45,9 @@ function TimeFrame(data) {
 
   self.start = ko.observable(data.start);
   self.end = ko.observable(data.end);
+  self.span = ko.computed(function() {
+    return self.start() ? self.start() + ' - ' + self.end() : '';
+  });
 }
 
 /**
@@ -70,7 +73,6 @@ function Venue(data) {
  *  }
  */
  function Location(data) {
-    console.log(data);
     var self = this;
     data = data || {};
 

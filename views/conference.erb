@@ -57,7 +57,7 @@
 </script>
 
 <script type="text/html" id="date-template">
-  <p data-bind="text: conf().time"></p>
+  <p data-bind="text: conf().time().span"></p>
 </script>
 
 <script type="text/html" id="no-date-template">
@@ -75,7 +75,7 @@
 
 <script type="text/html" id="itinerary-template">
   <ul class="list-group" data-bind="foreach: conf().itinerary">
-    <li class="list-group-item"><span data-bind="text: time"></span>: <span data-bind="text: title"></span></li>
+    <li class="list-group-item"><span data-bind="text: time().span"></span>: <span data-bind="text: title"></span></li>
   </ul>
 </script>
 
@@ -107,7 +107,6 @@
       <textarea type="text" rows="8" class="form-control" data-bind="value: editConf().description"></textarea>
       <div class="input-group">
         <label for="tags">Tags</span>
-          <span class="input-group-addon">Tags</span>
         <input type="text" class="form-control" data-bind="value: editConf().tags"></input>
       </div>
     </div>
