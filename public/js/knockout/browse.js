@@ -45,7 +45,7 @@ function BrowseViewModel() {
     self.industryCheckBoxes = ko.observableArray([]);
     self.industryCheckBoxes.subscribe(function (values) {
       if (values.length > 0) {
-        self.setFilterPartial('industry=' + values.join(' '));
+        self.setFilterPartial('industry=' + values.join('|'));
       } else {
         self.removeFilterPartial('industry=');
       }
@@ -101,7 +101,7 @@ function splitFilter(filter) {
       if (item.indexOf('=') > -1) {
         item = item.split('=');
         if (item.length == 2) {
-          item[1] = item[1].split(' ');
+          item[1] = item[1].split('|');
         }
       }
       return item;
@@ -114,10 +114,11 @@ function replaceFilterPartial(partial, filter) {
   if (matches) {
     filter = filter.replace(matches[0], '&' + partial);
   } else {
-    if (filter.length > 0) {
-     partial = '&' + partial;
-    }
-    filter = filter + partial;
+    filter = filter + '&' + partial;
+  }
+
+  if (filter[0] == '&') {
+    filter = filter.slice(1, filter.length)
   }
 
   return filter;
