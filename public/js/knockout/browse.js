@@ -53,7 +53,7 @@ function BrowseViewModel() {
     });
 
     self.filter.subscribe(function(filter) {
-      window.location.hash = filter;
+      window.location.hash = encodeURI(filter);
     });
 
     Sammy(function() {
@@ -72,7 +72,7 @@ function splitFilter(filter) {
     return;
   }
 
-  return decodeURIComponent(filter)
+  return decodeURI(filter)
     .toLowerCase()
     .split('&').map(function(item) {
       if (item.indexOf('=') > -1) {
