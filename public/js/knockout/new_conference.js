@@ -95,8 +95,12 @@ function ConferenceViewModel() {
             } else {
                 var value = parseFloat(provinces[i].value) * 1000
                 circles[provinces[i]._id] = L.circle(prov_to_gps[provinces[i]._id], value / 2, {
-                    color: 'blue'
+                    color: 'blue',
+                    className: provinces[i]._id
                 }).addTo(mapIndustry);
+                circles[provinces[i]._id].on('click', function(e) {
+                    self.city(prov_to_city[e.target.options.className])
+                })
                 circles[provinces[i]._id].bindPopup(value.toString() + ' workers in ' + provinces[i]._id);
             }
         }
