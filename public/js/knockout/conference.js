@@ -57,6 +57,15 @@ function ConferenceViewModel() {
     return timeFrame ? "date-template" : "no-date-template";
   };
 
+  Sammy(function() {
+    this.get('#:id', function() {
+      console.log('id: ' + this.params.id);
+      $.getJSON('/conference/' + this.params.id, function(data) {
+        self.conf(new Conference(data));
+      });
+    });
+  }).run();
+
 }
 
 $(function() {
