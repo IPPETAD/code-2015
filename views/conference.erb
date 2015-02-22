@@ -9,20 +9,39 @@
   <div class="clearfix"></div>
 </div>
 
-<div class="panel panel-default col-md-6" data-bind="with: conf().venue">
-  <div class="panel-body" data-bind="template: { name: $root.venueTemplateToUse }">
+<div class="panel panel-default">
+  <div class="panel-body" >
+    <div class="col-md-9">
+      <h4>Description</h4>
+      <p data-bind="text: conf().description"></p>
+      <p>
+        <strong>Tags: </strong>
+        <span data-bind="text: conf().tagsJoined"></span>
+      </p>
+    </div>
+    <div class="col-md-3">
+      <h4>Where</h4>
+      <div data-bind="template: { name: venueTemplateToUse }">
+      </div>
+      <div data-bind="template: { name: dateTemplateToUse }">
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="panel panel-default col-md-5 pull-right" data-bind="with: conf().time">
-  <div class="panel-body" data-bind="template: { name: $root.dateTemplateToUse }">
-  </div>
+<div class="panel panel-default">
+    <div class="panel-body" data-bind="html: conf().body">
+    </div>
 </div>
 
-<div class="clearfix"></div>
+<div class="panel panel-default">
+  <ul class="list-group" data-bind="foreach: conf().itinerary">
+    <li class="list-group-item"><span data-bind="text: time"></span>: <span data-bind="text: title"></span></li>
+  </ul>
+</div>
 
 <script type="text/html" id="venue-template">
-  <address>
+  <address data-bind="with: conf().venue">
     <strong data-bind="text: name"></strong><br>
     <span data-bind="text: location().line1"></span><br>
     <span data-bind="text: location().line2"></span><br>
@@ -34,7 +53,7 @@
 </script>
 
 <script type="text/html" id="date-template">
-  <p><span data-bind="text: start"></span> - <span data-bind="text: end"></span></p>
+  <p data-bind="text: conf().time"></p>
 </script>
 
 <script type="text/html" id="no-date-template">

@@ -25,6 +25,10 @@ function Conference(data) {
   data.tags = data.tags || [];
   self.tags = ko.observableArray(data.tags);
 
+  self.tagsJoined = ko.computed(function() {
+    return self.tags().join(', ');
+  });
+
   self.time = ko.observable(new TimeFrame(data.time));
   self.venue = ko.observable(new Venue(data.venue));
   data.itinerary = data.itinerary || [];
@@ -35,11 +39,15 @@ function Conference(data) {
 
 function TimeFrame(data) {
   var self = this;
-  data = data || "";
+  data = data || {};
 
   self.start = ko.observable(data.start);
   self.end = ko.observable(data.end);
 }
+
+TimeFrame.prototype.toString = function () {
+  return this.start() + ' - ' + this.end();
+};
 
 /**
  *  Venue: {
@@ -49,7 +57,7 @@ function TimeFrame(data) {
  */
 function Venue(data) {
   var self = this;
-  data = data || "";
+  data = data || {};
 
   self.name = ko.observable(data.name);
   self.location = ko.observable(new Location(data.location));
@@ -65,7 +73,7 @@ function Venue(data) {
  */
  function Location(data) {
     var self = this;
-    data = data || "";
+    data = data || {};
 
     self.address = ko.observable(data.address || "");
     self.crossStreet = ko.observable(data.crossStreet || "");
@@ -91,8 +99,7 @@ function Venue(data) {
 
 /**
  *  ItineraryEntry: {
- *    startTime: Date,
- *    endTime: Date,
+ *    time: TimeFrame
  *    title: String,
  *    color?: int,
  *    location: String
@@ -100,10 +107,9 @@ function Venue(data) {
  */
 function ItineraryEntry(data) {
   var self = this;
-  data = data || "";
+  data = data || {};
 
-  self.startTime = ko.observable(data.startTime);
-  self.endTime = ko.observable(data.endTime);
+  self.time = ko.observable(new TimeFrame(data.time));
   self.title = ko.observable(data.title);
   self.color = ko.observable(data.color);
   self.location = ko.observable(data.location);
