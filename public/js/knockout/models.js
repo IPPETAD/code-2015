@@ -16,7 +16,7 @@ function Conference(data) {
   var self = this;
   data = data || {};
 
-  self.id = data.id;
+  self._id = data._id;
   self.title = ko.observable(data.title);
   self.topic = ko.observable(data.topic);
   self.description = ko.observable(data.description);

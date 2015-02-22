@@ -138,8 +138,15 @@ class MyApp < Sinatra::Base
 	end
 
 	post '/conference/new' do
-		settings.db_conf.putConference(params[:conf])
-		'/conference'
+		"/conference##{settings.db_conf.putConference(params[:conf])}"
 	end
+
+	get '/conference/:id' do
+		content_type :json
+		conf = settings.db_conf.getConference(params[:id])
+		conf['_id'] = conf['_id'].to_s
+		conf.to_json
+	end
+
 
 end
