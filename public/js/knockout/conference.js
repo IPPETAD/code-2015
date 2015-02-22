@@ -1,6 +1,27 @@
 function ConferenceViewModel() {
   var self = this;
   self.conf = ko.observable(new Conference());
+  self.editConf = ko.observable();
+
+  self.edit = function() {
+    self.editConf(new Conference(ko.toJS(self.conf())));
+  };
+
+  self.cancel = function() {
+    self.editConf(null);
+  };
+
+  self.submit = function() {
+    // POST STUFF
+
+    // ON SUCCESS:
+    // self.conf(new Conference(response));
+    self.editConf(null);
+  };
+
+  self.confTemplateToUse = function() {
+    return self.editConf() ? 'edit-template' : 'display-template';
+  };
 
   self.venueTemplateToUse = function() {
     return self.conf().venue().name() ? "venue-template" : "no-venue-template";

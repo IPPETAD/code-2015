@@ -1,39 +1,48 @@
-<div class="jumbotron">
-  <div class="col-xs-8">
-    <h1 data-bind="text: conf().title"></h1>
-    <p data-bind="text: conf().topic"></p>
-  </div>
-  <div class="col-xs-4">
-    <img class="conf-logo" data-bind="attr: { src: conf().image }"></img>
-  </div>
-  <div class="clearfix"></div>
+<div class="container" data-bind="template: { name: confTemplateToUse }">
 </div>
 
-<div class="panel panel-default">
-  <div class="panel-body" >
-    <div class="col-md-9">
-      <h4>Description</h4>
-      <div data-bind="html: conf().description"></div>
-      <p>
-        <strong>Tags: </strong>
-        <span data-bind="text: conf().tagsJoined"></span>
-      </p>
+<script type="text/html" id="display-template">
+  <div class="jumbotron">
+    <div class="col-xs-8">
+      <h1 data-bind="text: conf().title"></h1>
+      <p data-bind="text: conf().topic"></p>
     </div>
-    <div class="col-md-3">
-      <h4>Where</h4>
-      <div data-bind="template: { name: venueTemplateToUse }">
+    <div class="col-xs-4">
+      <img class='conf-logo' data-bind="attr: { src: conf().image }"></img>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-body" >
+      <div class="col-md-9">
+        <h4>Description</h4>
+        <div data-bind="html: conf().description"></div>
+        <p>
+          <strong>Tags: </strong>
+          <span data-bind="text: conf().tagsJoined"></span>
+        </p>
       </div>
-      <div data-bind="template: { name: dateTemplateToUse }">
+      <div class="col-md-3">
+        <h4>Where</h4>
+        <div data-bind="template: { name: venueTemplateToUse }">
+        </div>
+        <div data-bind="template: { name: dateTemplateToUse }">
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="panel panel-default" data-bind="template: { name: bodyTemplateToUse }">
-</div>
+  <div class="panel panel-default" data-bind="template: { name: bodyTemplateToUse }">
+  </div>
 
-<div class="panel panel-default" data-bind="template: { name: itineraryTemplateToUse }">
-</div>
+  <div class="panel panel-default" data-bind="template: { name: itineraryTemplateToUse }">
+  </div>
+
+  <div>
+    <button type="button" class="btn btn-info" data-bind="click: edit">Edit</button>
+  </div>
+</script>
 
 <script type="text/html" id="venue-template">
   <address data-bind="with: conf().venue">
@@ -72,4 +81,47 @@
 
 <script type="text/html" id="no-itinerary-template">
   <div class="panel-body">No itinerary set yet.</div>
+</script>
+
+<script type="text/html" id="edit-template">
+  <div class="panel panel-default">
+    <div class="panel-body form-group">
+      <div class="input-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" data-bind="value: editConf().title"></input>
+      </div>
+      <div class="input-group">
+        <label for="topic">Topic</label>
+        <input type="text" class="form-control" data-bind="value: editConf().topic"></input>
+      </div>
+      <div class="input-group">
+        <label for="image">Image URL</label>
+        <input type="text" class="form-control" data-bind="value: editConf().image"></input>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-body form-group">
+      <label for="description">Description</label>
+      <textarea type="text" rows="8" class="form-control" data-bind="value: editConf().description"></textarea>
+      <div class="input-group">
+        <label for="tags">Tags</span>
+          <span class="input-group-addon">Tags</span>
+        <input type="text" class="form-control" data-bind="value: editConf().tags"></input>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-body form-group">
+      <label for="body">Body</label>
+      <textarea type="text" rows="40" class="form-control" data-bind="value: editConf().body"></textarea>
+    </div>
+  </div>
+
+  <div>
+    <button type="button" class="btn btn-danger" data-bind="click: cancel">Cancel</button>
+    <button type="button" class="btn btn-primary" data-bind="click: submit">Submit</button>
+  </div>
 </script>
