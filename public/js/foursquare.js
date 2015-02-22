@@ -4,7 +4,6 @@ var category_map = {
 };
 
 function fourSquare(location, category, func) {
-    console.log(location);
     $.get(
         'https://api.foursquare.com/v2/venues/search' +
         '?client_id=BNDGPC13FY511GOP2TNMHF41AMYDYCGOHNRFM1NRGUC5BIQH' +

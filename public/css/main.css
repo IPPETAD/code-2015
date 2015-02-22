@@ -21,6 +21,7 @@ svg text {
 
 body{
   background: #112;
+  color: #ccc;
 }
 
 .navbar{
@@ -52,7 +53,9 @@ body{
   font-size: 48px;
   padding: 100px 0;
 }
-
+h1{
+  color: #fff;
+}
 h2{
   color: #fff;
 }

@@ -24,12 +24,25 @@ function BrowseViewModel() {
         self.filteredConferences().currentPage(page);
     }
 
-
-    $.get('/conferences', function(data) {
+    $.get('/api/conference', function(data) {
         self.conferences(data.map(function(conference) {
             return new Conference(conference);
         }));
     });
+
+    self.filter.subscribe(function(filter) {
+      if (!filter || filter == '') {
+        window.location.hash = '';
+      } else {
+        window.location.hash = "filter=" + filter;
+      }
+    });
+
+    Sammy(function() {
+      this.get('#filter=:filter', function() {
+        self.filter(this.params.filter);
+      });
+    }).run();
 }
 
 $(function() {
