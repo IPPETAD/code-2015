@@ -6,14 +6,14 @@ function GrowthViewModel() {
 	self.year = ko.observable(2015);
 	
 	self.pieTitle = ko.computed(function() {
-		return "Industry workers poportion in " + self.year();
+		return "Industry workers in " + self.year();
 	});
 	self.timeTitle = ko.computed(function() {
-		return "Workers by year for " + self.industry();
+		return "Workers by year for '" + self.industry() + "'";
 	});
 
 	self.summary = ko.computed(function() {
-		return self.year() + ", " + self.industry() + ", " + self.location();
+		return self.industry() + ", " + self.year();
 	});
 }
 
