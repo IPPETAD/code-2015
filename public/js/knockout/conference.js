@@ -19,7 +19,7 @@ function ConferenceViewModel() {
   };
 
   Sammy(function() {
-    this.get('#:id', function() {
+    this.get('#id=:id', function() {
       if (this.params.id === 'test') {
         self.conf(getTestConference());
       } else {

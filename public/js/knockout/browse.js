@@ -29,6 +29,20 @@ function BrowseViewModel() {
             return new Conference(conference);
         }));
     });
+
+    self.filter.subscribe(function(filter) {
+      if (!filter || filter == '') {
+        window.location.hash = '';
+      } else {
+        window.location.hash = "filter=" + filter;
+      }
+    });
+
+    Sammy(function() {
+      this.get('#filter=:filter', function() {
+        self.filter(this.params.filter);
+      });
+    }).run();
 }
 
 $(function() {
